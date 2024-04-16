@@ -1,0 +1,10 @@
+<view class="app">
+  <block wx:if="{{loading}}">
+    <view class="cover_bar_srcoll cover_bulr_bg" catchtouchmove="true">
+      <view class="custom-loader"></view>
+    </view>
+  </block>
+  <view class="window">
+    <slot></slot>
+  </view>
+</view>

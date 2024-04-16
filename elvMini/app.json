@@ -1,0 +1,50 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/product/product",
+    "pages/view/view",
+    "pages/user/center/center",
+    "pages/user/login/login",
+    "pages/profiledetail/detail"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "电梯维保",
+    "navigationBarBackgroundColor": "#ffffff"
+  },
+  "usingComponents": {
+    "n-page": "/components/page/page",
+    "t-toast": "tdesign-miniprogram/toast/toast",
+    "t-badge": "tdesign-miniprogram/badge/badge",
+    "t-cell": "tdesign-miniprogram/cell/cell",
+    "t-image": "tdesign-miniprogram/image/image",
+    "t-notice-bar": "tdesign-miniprogram/notice-bar/notice-bar",
+    "t-swiper": "tdesign-miniprogram/swiper/swiper"
+  },
+  "tabBar": {
+    "selectedColor": "#3277f3",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页",
+        "iconPath": "/images/user-d.png",
+        "selectedIconPath": "/images/user-s.png"
+      },
+      {
+        "pagePath": "pages/view/view",
+        "text": "排班",
+        "iconPath": "/images/user-d.png",
+        "selectedIconPath": "/images/user-s.png"
+      },
+      {
+        "pagePath": "pages/user/center/center",
+        "text": "我的",
+        "iconPath": "/images/user-d.png",
+        "selectedIconPath": "/images/user-s.png"
+      }
+    ]
+  },
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

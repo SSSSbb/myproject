@@ -1,0 +1,51 @@
+
+.external-class {
+  opacity: 1 !important;
+  background: rgba(243, 243, 243, 1) !important;
+}
+
+.external-class-prefix-icon {
+  color: rgba(0, 0, 0, 0.9) !important;
+}
+.container {
+  margin-top: 24rpx;
+  margin-bottom: 100rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8rpx; /* 圆角 */
+  box-shadow: inset 0 0 10rpx rgba(0, 0, 0, 0.1); /* 添加四个边的阴影 */
+}
+
+.todo,
+.history {
+  margin: 0 60rpx; /* 添加间距 */
+  padding: 0 32rpx; /* 调整左右边距 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.profile-image {
+  width: 72px;
+  height: 72px;
+}
+.todo-content,
+.history-content {
+  margin-top: 12rpx; /* 调整图标与文字之间的间距 */
+}
+.text {
+  font-size: 28rpx;
+  color: rgba(0, 0, 0, .6);
+  line-height: 44rpx;
+  margin-bottom: 32rpx;
+}
+.tr {
+  margin-bottom: 1px; /* 调整行间距 */
+}
+.avatar {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  overflow: hidden;
+}
+

@@ -1,0 +1,65 @@
+<!-- pages/profiledetail/detail.wxml -->
+<view class="profileDetailContainer">
+    <view class="profileHeader">
+        <view class="profileImageContainer">
+            <image class="profileImage" src="data:image/png;base64,{{profileDetail.pic}}" />
+        </view>
+        <view class="profileName">{{profileDetail.name}}</view>
+    </view>
+    <view class="detailRow">
+        <view class="label">类型：</view>
+        <view class="value">{{profileDetail.type}}</view>
+    </view>
+    <view class="detailRow">
+        <view class="label">规格：</view>
+        <view class="value">{{profileDetail.spec}}</view>
+    </view>
+    <view class="detailRow">
+        <view class="label">设备代码：</view>
+        <view class="value">{{profileDetail.device_code}}</view>
+    </view>
+    <view class="detailRow">
+        <view class="label">位置：</view>
+        <view class="value">{{profileDetail.location}}</view>
+    </view>
+    <view class="detailRow">
+        <view class="label">状态：</view>
+        <view class="value">{{profileDetail.status}}</view>
+    </view>
+    <view class="detailRow">
+        <view class="label">维护类型：</view>
+        <view class="value">{{profileDetail.maintaintype}}</view>
+    </view>
+    <view class="detailRow">
+        <view class="label">生产商：</view>
+        <view class="value">{{profileDetail.man}}</view>
+    </view>
+    <view class="detailRow">
+        <view class="label">供应商：</view>
+        <view class="value">{{profileDetail.sup}}</view>
+    </view>
+    <view class="detailRow">
+        <view class="label">购买时间：</view>
+        <view class="value">{{profileDetail.buy_at}}</view>
+    </view>
+    <view class="detailRow">
+        <view class="label">创建时间：</view>
+        <view class="value">{{profileDetail.create_at}}</view>
+    </view>
+    <view class="detailRow">
+        <view class="label">上次维修时间：</view>
+        <view class="value">{{profileDetail.last_maintain}}</view>
+    </view>
+    <view class="detailRow">
+        <view class="label">上次保养时间：</view>
+        <view class="value">{{profileDetail.last_repair}}</view>
+    </view>
+    <view class="detailRow">
+        <view class="label">开始运行时间：</view>
+        <view class="value">{{profileDetail.start_at}}</view>
+    </view>
+    <view class="detailRow">
+        <view class="label">最后更新时间：</view>
+        <view class="value">{{profileDetail.updated_at}}</view>
+    </view>
+</view>

@@ -1,0 +1,24 @@
+.user-card {
+  width: 100%;
+  padding: var(--gap);
+  box-sizing: border-box;
+}
+
+.user-card .user-info {
+  display: flex;
+  margin-bottom: var(--gap);
+}
+
+.user-card .user-info .l {
+  flex: 1 0 0;
+}
+
+.user-card .user-info .nickname {
+  font-size: 24px;
+  margin-bottom: var(--gap);
+}
+
+.user-card .user-info .line {
+  display: flex;
+  gap: 8px;
+}

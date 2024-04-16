@@ -1,0 +1,19 @@
+/* pages/user/login/login.wxss */
+.page {
+  padding: 16px;
+}
+
+.page .logo {
+  font-size: 30px;
+  text-align: center;
+  padding: 32px;
+}
+
+.page .form {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.page .option {
+  padding: 16px 0;
+}

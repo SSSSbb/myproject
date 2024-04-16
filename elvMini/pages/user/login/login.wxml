@@ -1,0 +1,18 @@
+<n-page loading="{{ pageLoading }}">
+  <view class="page">
+
+    <view class="logo">
+      电梯维护保养
+    </view>
+
+    <view class="form">
+      <t-input bind:change="changeText" data-name="username" label="账号" placeholder="请输入账号" />
+      <t-input bind:change="changeText" data-name="password" label="密码" placeholder="请输入密码" type="password" />
+    </view>
+
+    <view class="option">
+      <t-button icon="sneer" theme="primary" block bind:tap="toLogin">登录</t-button>
+    </view>
+
+  </view>
+</n-page>

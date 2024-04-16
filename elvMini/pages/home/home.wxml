@@ -1,0 +1,37 @@
+<!--pages/home/home.wxml-->
+<n-page>
+  <t-notice-bar
+  visible="{{true}}"
+  prefixIcon="sound"
+  suffixIcon="chevron-right"
+  content="公告"
+  t-class="external-class"
+  t-class-prefix-icon="external-class-prefix-icon"
+></t-notice-bar>
+<view class="container">
+  <view class="todo">
+    <t-avatar icon="check-circle" size="large" badge-props="{{ {count: 8, size: 'large', offset: [7, 7]} }}" />
+    <view class="todo-content">我的待办</view>
+  </view>
+  <view class="history">
+    <t-avatar icon="history" size="large" badge-props="{{ { size: 'large', offset: [7, 7]} }}" />
+    <view class="history-content">历史记录</view>
+  </view>
+</view>
+<block wx:for="{{profilelistData}}" wx:key="index" wx:for-item="item" wx:for-index="idx">
+  <view class="tr">
+    <t-cell
+      url="{{'/pages/profiledetail/detail?id='+item.id}}"
+      title="{{item.name}}"
+      description="{{item.type}}"
+      image="data:image/png;base64,{{item.pic}}"
+      note="{{item.status}}"
+      bordered="{{false}}"
+      hover arrow
+    />
+  </view>
+</block>
+
+
+
+</n-page>
