@@ -175,6 +175,16 @@
     ],
   },
   {
+    path: '/todo',
+    routes: [
+      {
+        path: '/todo/index',
+        component: './todo/index',
+      },
+      
+    ],
+  },
+  {
     access: 'index',
     path: '/',
     redirect: '/rbac/user/index',

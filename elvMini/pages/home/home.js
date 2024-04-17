@@ -14,6 +14,7 @@ Page({
   data: {
     imageSrc: 'https://tdesign.gtimg.com/mobile/demos/image1.jpeg',
     profilelistData: [], // 初始化列表数据
+    todo:0,
     data: {
       visible: true,
       marquee1: {
@@ -28,10 +29,24 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) { 
-    get("/profile/index").then(res => {
+    const user = app.globalData.user;
+    const belongto = user.belongto;
+    const username = user.username;
+    get("/profile/index",{belongto:belongto}).then(res => {
       console.log(res.data.list);
       this.setData({
         profilelistData: res.data.list
+      });
+    }).catch(res => {
+      wx.showToast({
+        icon: "none",
+        title: res || "未知错误",
+      })
+    })
+    get("/todo/index",{belongto:belongto,username:username}).then(res => {
+      console.log({res});
+      this.setData({
+        // todo:res.data.li
       });
     }).catch(res => {
       wx.showToast({

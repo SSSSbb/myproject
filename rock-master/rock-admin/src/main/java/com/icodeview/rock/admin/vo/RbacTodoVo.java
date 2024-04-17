@@ -16,7 +16,7 @@ public class RbacTodoVo {
     private String createby;
     private String content;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime finishAt;
 }

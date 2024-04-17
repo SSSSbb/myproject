@@ -24,7 +24,7 @@ public class RbacTodoDto {
     private String content;
 
     @ApiModelProperty(value = "创建时间",name = "createAt",required = true)
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 
     @ApiModelProperty(value = "完成时间",name = "finishAt",required = true)
     private LocalDateTime finishAt;

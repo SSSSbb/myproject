@@ -10,7 +10,7 @@
 ></t-notice-bar>
 <view class="container">
   <view class="todo">
-    <t-avatar icon="check-circle" size="large" badge-props="{{ {count: 8, size: 'large', offset: [7, 7]} }}" />
+    <t-avatar icon="check-circle" size="large" badge-props="{{ {count: {todo}, size: 'large', offset: [7, 7]} }}" />
     <view class="todo-content">我的待办</view>
   </view>
   <view class="history">

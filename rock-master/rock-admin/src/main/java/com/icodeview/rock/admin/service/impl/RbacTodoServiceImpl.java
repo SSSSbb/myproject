@@ -10,6 +10,7 @@ import com.icodeview.rock.admin.pojo.RbacParts;
 import com.icodeview.rock.admin.pojo.RbacSup;
 import com.icodeview.rock.admin.pojo.RbacTodo;
 import com.icodeview.rock.admin.service.RbacTodoService;
+import com.icodeview.rock.admin.vo.RbacSupVo;
 import com.icodeview.rock.admin.vo.RbacTodoVo;
 import com.icodeview.rock.vo.PageResult;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,8 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 
@@ -34,6 +37,11 @@ public class RbacTodoServiceImpl extends ServiceImpl<RbacTodoMapper, RbacTodo> i
                 .and(StrUtil.isNotBlank(username), q -> q.like(RbacTodo::getUsername, "%" + username + "%"))
                 .orderByDesc(RbacTodo::getId)
                 .page(todo);
+        List<RbacTodoVo> record = page.getRecords().stream()
+                .map(rbacTodo -> BeanUtil.copyProperties(rbacTodo, RbacTodoVo.class))
+                .collect(Collectors.toList());
+        System.out.println(record);
+        return PageResult.page(record,page);
     }
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
