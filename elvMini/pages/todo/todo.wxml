@@ -1,0 +1,11 @@
+<!-- todo.wxml -->
+
+<view class="todo-list">
+  <block wx:for="{{ list }}" wx:key="id">
+    <view class="todo-item">
+      <text class="todo-content">{{ item.content }}</text>
+      <text class="todo-info">{{ item.createby }} 创建于 {{ item.created_at }}</text>
+      <text class="todo-status">{{ getStatusText(item.status) }}</text>
+    </view>
+  </block>
+</view>

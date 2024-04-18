@@ -1,20 +1,14 @@
 // pages/home/home.js
-const {
-  get
-} = require("../../api/api");
-const app = getApp()
-Page({
+const { get } = require("../../api/api");
+const app = getApp();
 
-  /**
-   * 页面的初始数据
-   */
+Page({
   options: {
     styleIsolation: 'apply-shared',
   },
   data: {
-    imageSrc: 'https://tdesign.gtimg.com/mobile/demos/image1.jpeg',
     profilelistData: [], // 初始化列表数据
-    todo:0,
+    todo: 0,
     data: {
       visible: true,
       marquee1: {
@@ -24,83 +18,43 @@ Page({
       },
     },
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function(options) { 
-    const user = app.globalData.user;
-    const belongto = user.belongto;
-    const username = user.username;
-    get("/profile/index",{belongto:belongto}).then(res => {
-      console.log(res.data.list);
-      this.setData({
-        profilelistData: res.data.list
-      });
-    }).catch(res => {
-      wx.showToast({
-        icon: "none",
-        title: res || "未知错误",
-      })
-    })
-    get("/todo/index",{belongto:belongto,username:username}).then(res => {
-      console.log({res});
-      this.setData({
-        // todo:res.data.li
-      });
-    }).catch(res => {
-      wx.showToast({
-        icon: "none",
-        title: res || "未知错误",
-      })
-    })
+  onLoad(options) {
   },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
+  navigateToTodoPage() {
+    wx.navigateTo({
+      url: '/pages/todo/todo',
+    });
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
   onShow() {
-
+    this.getUserInfo();
+    this.getProfileList();
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
   onUnload() {
-
+    this.setData({ profilelistData: [] });
   },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
+  getUserInfo() {
+    const { user } = app.globalData;
+    const { belongto, username } = user;
+    const status = 0;
+    get("/todo/index",{belongto,username,status}).then(({ data: { list } }) => {
+      console.log({list});
+      this.setData({ todo: list.length });
+    }).catch(error => {
+      this.showErrorToast(error);
+    });
   },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
+  getProfileList() {
+    const { belongto } = app.globalData.user;
+    get("/profile/index", { belongto }).then(({ data: { list } }) => {
+      this.setData({ profilelistData: list });
+    }).catch(error => {
+      this.showErrorToast(error);
+    });
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
-  }
-})
+  showErrorToast(error) {
+    wx.showToast({
+      icon: "none",
+      title: error || "未知错误",
+    });
+  },
+});

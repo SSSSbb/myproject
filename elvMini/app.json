@@ -5,7 +5,8 @@
     "pages/view/view",
     "pages/user/center/center",
     "pages/user/login/login",
-    "pages/profiledetail/detail"
+    "pages/profiledetail/detail",
+    "pages/todo/todo"
   ],
   "window": {
     "navigationBarTextStyle": "black",
