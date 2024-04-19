@@ -10,6 +10,7 @@ Page({
     list: [], 
     safer:[],
     profile:[],
+    parts:[],
   },
 
   /**
@@ -34,6 +35,14 @@ Page({
     get("/profile/index",{belongto,id: eid}).then(({ data: { list } }) => {
       console.log({list});
       this.setData({ profile:list });
+    }).catch(error => { 
+      this.showErrorToast(error);
+    }); 
+    const partsRecord = options.parts_record;
+    console.log({partsRecord});
+    get("/parts/record/index",{belongto,id: partsRecord}).then(({ data: { list } }) => {
+      console.log({list});
+      this.setData({ parts:list });
     }).catch(error => { 
       this.showErrorToast(error);
     }); 

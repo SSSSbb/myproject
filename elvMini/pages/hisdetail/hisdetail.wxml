@@ -40,4 +40,12 @@
       </view>
     </view>
   </view>
+  <view class="item">
+    <view class="title">部件更换记录</view>
+    <view class="part-item">
+      <view class="remain">操作：{{ parts[0].action }}</view>
+      <view class="used">备注：{{ parts[0].extrainfo }}</view>
+      <view class="disposed">创建于：{{ parts[0].created_at }}</view>
+    </view>
+  </view>
 </view>
