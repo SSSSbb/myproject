@@ -13,7 +13,7 @@
     <t-avatar icon="check-circle" size="large" badge-props="{{ {count: todo, size: 'large', offset: [7, 7]} }}" />
     <view class="todo-content">我的待办</view>
   </view>
-  <view class="history">
+  <view class="history" bindtap="navigateToHisPage">
     <t-avatar icon="history" size="large" badge-props="{{ { size: 'large', offset: [7, 7]} }}" />
     <view class="history-content">历史记录</view>
   </view>

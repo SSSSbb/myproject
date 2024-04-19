@@ -25,6 +25,11 @@ Page({
       url: '/pages/todo/todo',
     });
   },
+  navigateToHisPage() {
+    wx.navigateTo({
+      url: '/pages/his/his',
+    });
+  },
   onShow() {
     this.getUserInfo();
     this.getProfileList();
@@ -35,7 +40,7 @@ Page({
   getUserInfo() {
     const { user } = app.globalData;
     const { belongto, username } = user;
-    const status = 0;
+    const status = 0 ;
     get("/todo/index",{belongto,username,status}).then(({ data: { list } }) => {
       console.log({list});
       this.setData({ todo: list.length });

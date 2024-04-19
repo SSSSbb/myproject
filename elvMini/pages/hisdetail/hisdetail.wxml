@@ -1,0 +1,43 @@
+<!-- 在 wxml 页面中 -->
+<view class="container">
+  <!-- 项目信息 -->
+  <view class="item">
+    <view>项目编号：{{ list[0].id }}</view>
+    <view>电梯编号：{{ list[0].eid }}</view>
+    <view>维修类型：{{ list[0].work === 'repair' ? '维修' : (list[0].work === 'maintain' ? '保养' : list[0].work) }}</view>
+    <view>项目内容：{{ list[0].project }}</view>
+    <view>创建时间：{{ list[0].created_at }}</view>
+  </view>
+
+  <!-- 安全员信息 -->
+  <view class="item">
+    <view class="title">安全员信息</view>
+    <view class="safer-item">
+      <image class="avatar" src="{{ safer[0].avatar }}" mode="aspectFill"></image>
+      <view class="info">
+        <view class="username">姓名：{{ safer[0].username }}</view>
+        <view class="mobile">电话：{{ safer[0].mobile }}</view>
+        <view class="role">角色：{{ safer[0].role.name }}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 电梯信息 -->
+  <view class="item">
+    <view class="title">电梯信息</view>
+    <view class="profile-item">
+      <view class="info">
+        <image class="pic" src="data:image/png;base64,{{profile[0].pic}}" ></image>
+        <view class="name">名称：{{ profile[0].name }}</view>
+        <view class="device_code">设备编码：{{ profile[0].device_code }}</view>
+        <view class="reg_code">注册代码：{{ profile[0].device_code }}</view>
+        <view class="location">位置：{{ profile[0].location }}</view>
+        <view class="type">类型：{{ profile[0].type }}</view>
+        <view class="status">状态：{{profile[0].status }}</view>
+        <view class="last_maintain">上次保养：{{profile[0].last_maintain }}</view>
+        <view class="last_repair">上次维修：{{profile[0].last_maintain }}</view>
+        <view class="status">状态：{{profile[0].status }}</view>
+      </view>
+    </view>
+  </view>
+</view>

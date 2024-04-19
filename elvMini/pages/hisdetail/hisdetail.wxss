@@ -1,0 +1,53 @@
+/* 在 wxss 样式文件中 */
+.container {
+  padding: 20rpx;
+}
+
+.item {
+  margin-top: 20rpx;
+  background-color: #f0f0f0;
+  border-radius: 10rpx;
+  box-shadow: 0 2rpx 5rpx rgba(0, 0, 0, 0.1);
+  padding: 20rpx;
+}
+
+.item view {
+  margin-bottom: 10rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.title {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.safer-item,
+.profile-item {
+  display: flex;
+  align-items: center;
+}
+
+.avatar
+ {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+}
+
+.info {
+  flex: 1;
+}
+
+.username,
+.mobile,
+.role,
+.name,
+.location,
+.type,
+.status {
+  font-size: 28rpx;
+  color: #333;
+}

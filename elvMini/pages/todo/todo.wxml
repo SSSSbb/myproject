@@ -3,9 +3,9 @@
 <view class="todo-list">
   <block wx:for="{{ list }}" wx:key="id">
     <view class="todo-item">
-      <text class="todo-content">{{ item.content }}</text>
-      <text class="todo-info">{{ item.createby }} 创建于 {{ item.created_at }}</text>
-      <text class="todo-status">{{ getStatusText(item.status) }}</text>
+      <view class="todo-content">{{ item.content }}</view>
+      <view class="todo-info">{{ item.createby }}创建于{{ item.created_at }}</view>
+      <view class="todo-status">{{ getStatusText(item.status) }}</view>
     </view>
   </block>
 </view>

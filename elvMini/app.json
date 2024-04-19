@@ -6,7 +6,9 @@
     "pages/user/center/center",
     "pages/user/login/login",
     "pages/profiledetail/detail",
-    "pages/todo/todo"
+    "pages/todo/todo",
+    "pages/his/his",
+    "pages/hisdetail/hisdetail"
   ],
   "window": {
     "navigationBarTextStyle": "black",
