@@ -41,11 +41,43 @@
     </view>
   </view>
   <view class="item">
-    <view class="title">部件更换记录</view>
+    <view class="title">部件维护记录</view>
     <view class="part-item">
-      <view class="remain">操作：{{ parts[0].action }}</view>
+      <view class="remain">操作：
+  {{
+    parts[0].action === 'clean' ? '清洁' :
+    parts[0].action === 'lubricate' ? '润滑' :
+    parts[0].action === 'inspect' ? '检查' :
+    parts[0].action === 'adjust' ? '调整' :
+    parts[0].action === 'replace' ? '更换' :
+    parts[0].action
+  }}
+</view>
       <view class="used">备注：{{ parts[0].extrainfo }}</view>
       <view class="disposed">创建于：{{ parts[0].created_at }}</view>
     </view>
   </view>
+  <view class="item">
+  <view class="title" wx:if="{{ parts[0].action === 'replace' }}">部件更换记录</view>
+  <!-- 更换前零件信息 -->
+  <view class="part-item before" wx:if="{{ parts[0].action === 'replace' }}">
+    <view class="subtitle">更换前零件信息</view>
+    <view class="remain">零件编号：{{ parts_beforelist[0].id }}</view>
+    <view class="remain">零件名称：{{ parts_beforelist[0].name }}</view>
+    <view class="used">报废时间：{{ parts_beforelist[0].diposed_at }}</view>
+    <view class="disposed">创建于：{{ parts_beforelist[0].create_at }}</view>
+  </view>
+  <!-- 更换后零件信息 -->
+  <view class="part-item after" wx:if="{{ parts[0].action === 'replace' }}">
+    <view class="subtitle">更换后零件信息</view>
+    <view class="remain">零件编号：{{ parts_afterlist[0].id }}</view>
+    <view class="used">零件名称：{{ parts_afterlist[0].name }}</view>
+    <view class="disposed">创建于：{{ parts_afterlist[0].create_at }}</view>
+    <view class="disposed">上次保养：{{ parts_afterlist[0].last_maintain }}</view>
+    <view class="disposed">上次维修：{{ parts_afterlist[0].last_repair }}</view>
+    <view class="disposed">维保类型：{{ parts_afterlist[0].maintaintype }}</view>
+    <view class="disposed">运行状态：{{ parts_afterlist[0].status }}</view>
+  </view>
+</view>
+
 </view>
