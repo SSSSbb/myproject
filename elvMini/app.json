@@ -8,7 +8,8 @@
     "pages/profiledetail/detail",
     "pages/todo/todo",
     "pages/his/his",
-    "pages/hisdetail/hisdetail"
+    "pages/hisdetail/hisdetail",
+    "pages/tododetail/tododetail"
   ],
   "window": {
     "navigationBarTextStyle": "black",
