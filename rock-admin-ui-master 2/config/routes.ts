@@ -175,6 +175,20 @@
     ],
   },
   {
+    path: '/schedule',
+    routes: [
+      {
+        path: '/schedule/preferences/index',
+        component: './schedule/preferences/index',
+      },
+      {
+        path: '/schedule/schedulelist/index',
+        component: './schedule/schedulelist/index',
+      },
+      
+    ],
+  },
+  {
     path: '/todo',
     routes: [
       {

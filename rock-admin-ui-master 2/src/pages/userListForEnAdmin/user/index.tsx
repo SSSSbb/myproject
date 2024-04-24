@@ -11,11 +11,11 @@ import { Access, useAccess } from '@@/plugin-access/access';
 
 import { getIndexById, queryEnterprise } from '@/pages/rbac/enterprise/service';
 import { currentUser, currentUser as queryCurrentUser } from '@/services/api';
+import { addPreferences } from '@/pages/schedule/preferences/service';
 
 const RbacUserList: React.FC = () => {
   const actionRef = useRef<ActionType>();
   const [createModalVisible, handleCreateModalVisible] = useState<boolean>(false);
-  const [belongTo, setBelongTo] = useState<number>();
   const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
   const [row, handleRow] = useState<Partial<TableListItem>>({});
   const access: API.UserAccessItem = useAccess();
@@ -170,6 +170,7 @@ const RbacUserList: React.FC = () => {
               value.belongto = rsp.data?.belongto;
               const response = await addUser(value as TableListItem);
               const { code, msg } = response;
+              console.log({response});
               if (code !== 200) {
                 message.error(msg);
                 return;

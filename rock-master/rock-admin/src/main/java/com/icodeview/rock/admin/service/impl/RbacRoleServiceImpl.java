@@ -71,7 +71,7 @@ public class RbacRoleServiceImpl extends ServiceImpl<RbacRoleMapper, RbacRole>
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public void deleteRole(Long id) {
         RbacRole rbacRole = getById(id);
-        Integer count = rbacUserRoleService.lambdaQuery().eq(RbacUserRole::getRoleId, id).count();
+        Integer count = Math.toIntExact(rbacUserRoleService.lambdaQuery().eq(RbacUserRole::getRoleId, id).count());
         if(count>0){
             throw new BadHttpRequestException("请移除所有管理员的"+rbacRole.getName()+"角色后，再删除该角色！");
         }

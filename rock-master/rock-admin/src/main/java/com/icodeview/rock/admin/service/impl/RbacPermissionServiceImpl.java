@@ -53,11 +53,11 @@ public class RbacPermissionServiceImpl extends ServiceImpl<RbacPermissionMapper,
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public void delete(Long id) {
-        Integer childrenNum = lambdaQuery().eq(RbacPermission::getParentId, id).count();
+        Integer childrenNum = Math.toIntExact(lambdaQuery().eq(RbacPermission::getParentId, id).count());
         if(childrenNum>0){
             throw new BadHttpRequestException("请移除该权限的所有子权限后，再该删除该权限！");
         }
-        Integer count = rbacRolePermissionService.lambdaQuery().eq(RbacRolePermission::getPermissionId, id).count();
+        Integer count = Math.toIntExact(rbacRolePermissionService.lambdaQuery().eq(RbacRolePermission::getPermissionId, id).count());
         if (count > 0) {
             throw new BadHttpRequestException("请移除所有角色的该权限后，再该删除该权限！");
         }

@@ -64,7 +64,7 @@ public class RbacUserServiceImpl extends ServiceImpl<RbacUserMapper, RbacUser>
 
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
-    public void createUser(RbacUserDto userDto) {
+    public RbacUser createUser(RbacUserDto userDto) {
         System.out.println("111"+userDto);
         if(!checkMobile(null,userDto.getMobile())){
             throw new BadHttpRequestException("该手机号已被使用！");
@@ -88,6 +88,7 @@ public class RbacUserServiceImpl extends ServiceImpl<RbacUserMapper, RbacUser>
         System.out.println(user);
         rbacUserRoleService.attachRole(user.getId(),userDto.getRoleId());
         rbacUserEnterpriseService.attachRelation(user.getId(),userDto.getBelongto());
+        return user;
     }
 
     @Override

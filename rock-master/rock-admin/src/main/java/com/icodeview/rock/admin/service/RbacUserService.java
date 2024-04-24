@@ -16,7 +16,7 @@ import java.util.List;
  */
 public interface RbacUserService extends IService<RbacUser> {
     List<MenuDataItem> getMenuByUserId(Integer userId);
-    void createUser(RbacUserDto userDto);
+    RbacUser createUser(RbacUserDto userDto);
     void updateUser(RbacUserDto userDto);
     void deleteUser(Integer id);
     void setUserStatus(StatusDto dto);

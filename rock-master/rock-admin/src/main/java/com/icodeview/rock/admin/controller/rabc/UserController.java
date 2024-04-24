@@ -6,7 +6,9 @@ import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.github.xiaoymin.knife4j.annotations.ApiSort;
 import com.icodeview.rock.admin.dto.RbacUserDto;
 import com.icodeview.rock.admin.dto.StatusDto;
+import com.icodeview.rock.admin.dto.UserPreferencesDto;
 import com.icodeview.rock.admin.pojo.RbacUser;
+import com.icodeview.rock.admin.service.RbacUserPreferencesService;
 import com.icodeview.rock.admin.service.RbacUserService;
 import com.icodeview.rock.admin.vo.MenuDataItem;
 import com.icodeview.rock.admin.vo.RbacUserVo;
@@ -34,6 +36,8 @@ import java.util.List;
 public class UserController {
     @Resource
     private RbacUserService rbacUserService;
+    @Resource
+    private RbacUserPreferencesService preferencesService;
 
     @AuthorizationIgnore
     @ApiOperationSupport(order = 1, author = "刘紫璇")
@@ -60,10 +64,18 @@ public class UserController {
     @ApiOperationSupport(order = 3, author = "781613629qq.com")
     @ApiOperation("添加用户")
     @PostMapping("create")
-    public CommonResult<Void> create(@RequestBody @Validated RbacUserDto dto) {
-        System.out.println(dto);
-        rbacUserService.createUser(dto);
-        return CommonResult.success("添加成功！");
+    public CommonResult<RbacUser> create(@RequestBody @Validated RbacUserDto dto) {
+        RbacUser newUser = rbacUserService.createUser(dto);
+        UserPreferencesDto pdto = new UserPreferencesDto();
+        System.out.println("3");
+        pdto.setBelongto(newUser.getBelongto());
+        pdto.setUserid(Long.valueOf(newUser.getId()));
+        pdto.setNoWorkDay(7);
+        pdto.setNoMoreThanTime(30);
+        System.out.println(pdto);
+        System.out.println("2");
+        preferencesService.createPreferences(pdto);
+        return CommonResult.success("添加成功！", newUser);
     }
 
     @ApiOperationSupport(order = 4, author = "刘紫璇")
