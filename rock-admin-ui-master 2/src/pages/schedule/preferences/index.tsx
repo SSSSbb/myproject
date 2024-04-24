@@ -8,7 +8,9 @@ import { Access, useAccess } from '@@/plugin-access/access';
 import { currentUser as queryCurrentUser } from '@/services/api';
 import {  addPreferences, deletePreferences, generate, queryPreferences, updatePreferences } from './service';
 import { queryUser } from '@/pages/rbac/user/service';
+import { querySchedule } from '../schedulelist/service';
 
+import moment from 'moment';
 
 const RbacTypeList: React.FC = () => {
   const actionRef = useRef<ActionType>();
@@ -29,7 +31,16 @@ const RbacTypeList: React.FC = () => {
       actionRef.current?.reload();
     }
   }
-  async function handleGenerate(belongto:number) {
+  async function handleGenerate(belongto: number) {
+    console.log({ belongto });
+    const response2 = await querySchedule({ belongto: belongto });
+    
+    // 判断是否已经存在本周的数据
+    if (isCurrentWeekDataExist(response2)) {
+      message.warning("本周已生成过排班表");
+      return;
+    }
+    
     const response = await generate(belongto);
     const { code, msg } = response;
     if (code !== 200) {
@@ -41,6 +52,23 @@ const RbacTypeList: React.FC = () => {
       actionRef.current?.reload();
     }
   }
+  
+  // 判断是否存在本周的数据
+  function isCurrentWeekDataExist(response: any) {
+    // 获取当前日期
+    const currentDate = moment();
+    
+    // 遍历响应数据，检查每条数据的 create_time 是否属于本周
+    for (const item of response.data) {
+      const createTime = moment(item.create_time);
+      if (createTime.isoWeek() === currentDate.isoWeek() && createTime.year() === currentDate.year()) {
+        return true;
+      }
+    }
+    
+    return false;
+  }
+  
 
   const columns: ProColumns<TableListItem>[] = [
     {

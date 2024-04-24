@@ -1,157 +1,114 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table';
-import { Button, message, Modal, Space, Switch, Form, Popconfirm, Table, Card } from 'antd';
 import type { TableListItem } from './data';
-import ProForm, {  ModalForm, ProFormDateTimePicker, ProFormSelect, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
+import ProForm, {  ModalForm, ProFormDateTimePicker, ProFormItem, ProFormSelect, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import { Access, useAccess } from '@@/plugin-access/access';
 import { currentUser as queryCurrentUser } from '@/services/api';
-import {  addPreferences, deletePreferences, generate, queryPreferences, updatePreferences } from './service';
+import {  querySchedule } from './service';
 import { queryUser } from '@/pages/rbac/user/service';
+import type { DatePickerProps } from 'antd';
+import { Button, DatePicker, Space } from 'antd';
+import { PlusOutlined, ZoomInOutlined } from '@ant-design/icons';
 
+import moment from 'moment';
 
 const RbacTypeList: React.FC = () => {
+
   const actionRef = useRef<ActionType>();
   const [form] = ProForm.useForm<TableListItem>();
+  const [createModalVisible, handleCreateModalVisible] = useState<boolean>(false);
+  const [selectedWeek, setSelectedWeek] = useState<string>(); 
   const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
   const access: API.UserAccessItem = useAccess();
+  const [startOfWeek, setStartOfWeek] = useState<any>();
+  const [endOfWeek, setEndOfWeek] = useState<any>();
   const [belongto, setBelongto] = useState<any>();
-  async function handleDeleteUser(id: number) {
-    console.log({ id });
-    const response = await deletePreferences(id);
-    const { code, msg } = response;
-    if (code !== 200) {
-      message.error(msg);
-      return;
-    }
-    message.success(msg);
-    if (actionRef.current) {
-      actionRef.current?.reload();
-    }
+  const [scheduleData, setScheduleData] = useState<any>();
+  const onChange: DatePickerProps['onChange'] = (date, dateString) => {
+    const startOfWeek = date.clone().startOf('isoWeek'); 
+const endOfWeek = date.clone().endOf('isoWeek'); 
+setStartOfWeek(startOfWeek.format('YYYY-MM-DD'));
+setEndOfWeek(endOfWeek.format('YYYY-MM-DD'));
+actionRef.current.reload();
+console.log(startOfWeek.format('YYYY-MM-DD'));
+console.log(endOfWeek.format('YYYY-MM-DD'));
   }
-  async function handleGenerate(belongto:number) {
-    const response = await generate(belongto);
-    const { code, msg } = response;
-    if (code !== 200) {
-      message.error(msg);
-      return;
-    }
-    message.success(msg);
-    if (actionRef.current) {
-      actionRef.current?.reload();
-    }
-  }
-
-  const columns: ProColumns<TableListItem>[] = [
-    {
-      title: 'ID',
-      dataIndex: 'id',
-      hideInTable: true,
-      search:false,
-    },
-    {
-      title: '用户名',
-      dataIndex: 'username',
-      search:false,
-    },
-    {
-      title: '用户 ID',
-      dataIndex: 'userid',
-      hideInTable: true,
-      search:false,
-    },
-    {
-      title: '每周不工作日',
-      dataIndex: 'no_work_day',
-      search:false,
-      render: (text) => {
-        switch (text) {
-          case 1:
-            return '星期一';
-          case 2:
-            return '星期二';
-            case 3:
-            return '星期三';
-            case 4:
-              return '星期四';
-              case 5:
-                return '星期五';
-                case 6:
-                  return '星期六';
-                  case 7:
-            return '星期日';
-          default:
-            return text;
-        }
+  const generateColumns = () => {
+    const weekdays = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
+    const columns = [
+      {
+        title: '时段',
+        dataIndex: 'slot',
+        key: 'slot',
       },
-    },
-    {
-      title: '每周最少工时',
-      dataIndex: 'no_more_than_time',
-      search:false,
-    },
-    {
-      title: '操作',
-      hideInForm: true,
-      search: false,
-      render: (_, record) => {
-        return (
-          <Space>
-            <a
-              type={'primary'}
-              onClick={() => {
-                form.setFieldsValue(record);
-                handleUpdateModalVisible(true);
-              }}
-            >
-              编辑
-            </a>
-            <Popconfirm title={'确认删除？'} onConfirm={() => handleDeleteUser(record.id!)}>
-              <a>删除</a>
-            </Popconfirm>
-          </Space>
-        );
-      },
-    },
-  ];
+    ];
+    // 根据星期生成列配置
+    weekdays.forEach((weekday, index) => {
+      columns.push({
+        title: weekday,
+        dataIndex: `weekday${index}`,
+        key: `weekday${index}`,
+      });
+    });
+    return columns;
+  };
+  const generateData = (scheduleData) => {
+    console.log({scheduleData});
+    const data = [];
+    const slots = [ 0, 1, 2, 3, 4];
+    slots.forEach((slot) => {
+      const rowData = {
+        key: `slot${slot}`,
+        slot: `时段${slot}`,
+      };
+      // 根据星期填充数据
+      for (let i = 0; i < 7; i++) {
+        const item = scheduleData.find((item) => item.weekday === i && item.slot === slot);
+        rowData[`weekday${i}`] = item ? item.username : ''; // 这里假设要显示的是userid
+      }
+      data.push(rowData);
+    });
+    setScheduleData(data);
+  };
+  const columns = generateColumns();
   return (
     <PageContainer>
       <Access accessible={access.basicTypeIndex!}>
+        <div>
+          <div>
+          <DatePicker onChange={onChange} picker="week" />
+          </div>
         <ProTable
           actionRef={actionRef}
           rowKey="id"
           search={false}
+          dataSource={scheduleData}
           columns={columns}
-          toolBarRender={() => [
-              <Button type="primary" onClick={() =>{handleGenerate(belongto)}}>
-                 生成排班表
-              </Button>
-          ]}
+          pagination={false}
           request={async (params = {}) => {
             const rsp = await queryCurrentUser();
           const belongto = rsp.data?.belongto;
           setBelongto(belongto);
-            const response = await queryPreferences({ ...params, belongto: rsp.data?.belongto });
+            const response = await querySchedule({ ...params, belongto: rsp.data?.belongto });
             console.log({ response });
             const res2 = await queryUser({...params,belongto:rsp.data?.belongto});
-            console.log({res2});
             const userIdToUsernameMap = {};
-res2.data.list.forEach(user => {
-    userIdToUsernameMap[user.id] = user.username;
-});
+             res2.data.list.forEach(user => {
+                 userIdToUsernameMap[user.id] = user.username;
+             });
 
-// 向响应数据中添加用户名
-response.data.list.forEach(item => {
-    item.username = userIdToUsernameMap[item.userid];
-});
-            return {
-              success: response.code === 200,
-              data: response!.data!.list,
-              page: response!.data!.page_num,
-              total: response!.data!.total,
-            };
+            response.data.forEach(item => {
+              item.username = userIdToUsernameMap[item.userid];
+            });
+            const filteredData = response.data.filter(item => {
+              const createTime = moment(item.create_time);
+              return createTime.isBetween(startOfWeek, endOfWeek);
+          });
+generateData(filteredData);
           }}
         />
+       
         {updateModalVisible && (
           <ModalForm<TableListItem>
             title="编辑"
@@ -163,68 +120,29 @@ response.data.list.forEach(item => {
             modalProps={{
               centered: true,
             }}
-            onFinish={async (value: TableListItem) => {
-              const payload: TableListItem = {
-                id: value.id,
-                ...value,
-              };
-              const response = await updatePreferences(payload);
-              const { code, msg } = response;
-              if (code !== 200) {
-                message.error(msg);
-                return;
-              }
-              message.success(msg);
-              handleUpdateModalVisible(false);
-              if (actionRef.current) {
-                actionRef.current.reload();
-              }
-            }}
+            // onFinish={async (value: TableListItem) => {
+            //   const payload: TableListItem = {
+            //     id: value.id,
+            //     ...value,
+            //   };
+            //   const response = await updatePrefer(payload);
+            //   const { code, msg } = response;
+            //   if (code !== 200) {
+            //     message.error(msg);
+            //     return;
+            //   }
+            //   message.success(msg);
+            //   handleUpdateModalVisible(false);
+            //   if (actionRef.current) {
+            //     actionRef.current.reload();
+            //   }
+            // }}
           >
             <ProFormText name={'id'} label={'ID'} hidden />
             <ProFormText name={'belongto'} label={'belongto'} hidden />
-            <ProFormSelect
-  name="no_work_day"
-  label={'周几休息'}
-  placeholder={'请选择周几休息'}
-  rules={[
-    {
-      required: true,
-      message: '请选择周几休息',
-    },
-  ]}
-  options={[
-    { label: '星期一', value: '1' },
-    { label: '星期二', value: '2' },
-    { label: '星期三', value: '3' },
-    { label: '星期四', value: '4' },
-    { label: '星期五', value: '5' },
-    { label: '星期六', value: '6' },
-    { label: '星期日', value: '7' },
-  ]}
-/>
-
-            <ProFormText
-              name="no_more_than_time"
-              label={'一周最多工时'}
-              placeholder={'请输入一周最多工时'}
-              rules={[
-                {
-                  required: true,
-                  message: '请输入一周最多工时',
-                },
-                {
-                  validator: async (_, value) => {
-                    if (value === '0') {
-                      throw new Error('工时不能为0');
-                    }
-                  },
-                },
-              ]}
-              
-            />
           </ModalForm>
         )}
+              </div>
       </Access>
     </PageContainer>
   );

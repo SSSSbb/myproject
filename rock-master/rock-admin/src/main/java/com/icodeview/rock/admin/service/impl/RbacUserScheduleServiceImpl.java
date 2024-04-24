@@ -1,5 +1,7 @@
 package com.icodeview.rock.admin.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.icodeview.rock.admin.dto.RbacUserScheduleDto;
 import com.icodeview.rock.admin.ga.MyGa;
@@ -10,10 +12,14 @@ import com.icodeview.rock.admin.pojo.RbacUserSchedule;
 import com.icodeview.rock.admin.service.RbacUserPreferencesService;
 import com.icodeview.rock.admin.service.RbacUserScheduleService;
 import com.icodeview.rock.admin.service.RbacUserService;
+import com.icodeview.rock.admin.vo.RbacUserPreferencesVo;
+import com.icodeview.rock.admin.vo.RbacUserScheduleVo;
+import com.icodeview.rock.vo.PageResult;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -39,14 +45,25 @@ public class RbacUserScheduleServiceImpl extends ServiceImpl<RbacUserScheduleMap
             return scheduleDTO;
         }).collect(Collectors.toList());
     }
+    @Override
+    public List<RbacUserScheduleVo> getIndex(Integer id, Integer userid, Integer belongto) {
+        List<RbacUserSchedule> scheduleList = lambdaQuery()
+                .eq(id != null, RbacUserSchedule::getId, id)
+                .eq(userid != null, RbacUserSchedule::getUserid, userid)
+                .eq(belongto != null, RbacUserSchedule::getBelongto, belongto)
+                .orderByDesc(RbacUserSchedule::getId)
+                .list();
+
+        return scheduleList.stream()
+                .map(rbacUserSchedule -> BeanUtil.copyProperties(rbacUserSchedule, RbacUserScheduleVo.class))
+                .collect(Collectors.toList());
+    }
 
 
     @Override
     public void generate(Integer belongto) {
-        // 获取员工列表
-//        List<RbacUser> userList = userService.list();
         List<RbacUserPreferences> userList = preferencesService.list();
-        System.out.println("userList-----------------------------");
+        LocalDateTime createTimeValue = LocalDateTime.now();
         System.out.println(userList);
         ArrayList<Long> userIds = new ArrayList<>();
         // 获取员工偏好
@@ -71,17 +88,15 @@ public class RbacUserScheduleServiceImpl extends ServiceImpl<RbacUserScheduleMap
         for (int i = 0; i < plan.size(); i++) {
             List<Long> pl = plan.get(i);
             for (int j = 0; j < pl.size(); j++) {
-                schedules.add(new RbacUserSchedule(pl.get(j), i, j,belongto));
+                schedules.add(new RbacUserSchedule(pl.get(j), i, j,belongto,createTimeValue));
             }
         }
+        System.out.println(schedules);
         List<RbacUserScheduleDto> dtoList = this.getScheduleDTO();
         if (dtoList != null) {
             this.removeBatchByIds(dtoList);
         }
         this.saveBatch(schedules);
-
-
-
     }
 
 

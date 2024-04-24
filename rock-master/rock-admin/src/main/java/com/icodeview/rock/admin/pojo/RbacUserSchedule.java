@@ -21,10 +21,12 @@ public class RbacUserSchedule implements Serializable {
 
 
 
-    public RbacUserSchedule(Long userId, Integer slot, Integer weekday,Integer belongto) {
+    public RbacUserSchedule(Long userId, Integer slot, Integer weekday,Integer belongto,LocalDateTime createTime) {
         this.userid = userId;
         this.slot = slot;
         this.weekday = weekday;
+        this.belongto = belongto;
+        this.createTime = createTime;
     }
 
     /**

@@ -80,6 +80,8 @@ public class RbacUserPreferencesController {
     @GetMapping("generate")
     @ApiImplicitParam(value = "id", name = "id", required = true)
     public CommonResult<Void> generate(@RequestParam(value = "belongto") Integer belongto) {
+        System.out.println("11111");
+        System.out.println(belongto);
         scheduleService.generate(belongto);
         return CommonResult.success("生成成功！");
     }

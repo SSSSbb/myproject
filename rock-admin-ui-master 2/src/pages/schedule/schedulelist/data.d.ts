@@ -1,12 +1,10 @@
 export type TableListItem = {
   id: number;
   username: string;
-  which: number;
-  status: number;
-  createby:string;
-  content:string;
-  created_at?: string;
-  finish_at?: string;
+  userid: number;
+  create_time: string;
+  slot:number;
+  weekday:number;
   belongto?: number;
 };
 
@@ -31,11 +29,11 @@ export type TableListData = {
 export type TableListParams = {
   id: number;
   username: string;
-  which: number;
-  status: number;
-  createby:string;
+  userid: number;
+  create_time: string;
+  slot:number;
+  weekday:number;
   belongto?: number;
-  created_at?: string;
   filter?: Record<string, any[]>;
   sorter?: Record<string, any>;
 };
