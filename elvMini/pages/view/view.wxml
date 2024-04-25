@@ -1,2 +1,20 @@
-<!--pages/view/view.wxml-->
-<text>pages/view/view.wxml</text>
+<table border="1" cellpadding="8">
+  <thead>
+    <tr>
+      <th>时段/星期</th>
+      <th>周一</th>
+      <th>周二</th>
+      <th>周三</th>
+      <th>周四</th>
+      <th>周五</th>
+      <th>周六</th>
+      <th>周日</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr wx:for="{{ scheduleTable }}" wx:for-item="slot" wx:for-index="slotIndex">
+      <td>{{ slotIndex }}</td>
+      <td wx:for="{{ slot }}" wx:for-item="item" wx:for-index="dayIndex">{{ item.username }}</td>
+    </tr>
+  </tbody>
+</table>
