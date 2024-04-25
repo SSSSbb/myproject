@@ -38,7 +38,7 @@ Page({
               scheduletable[slot][weekday] = item; 
             });
             this.setData({ scheduleTable: scheduletable });
-            console.log(this.data.scheduleTable);
+            console.log(this.data.scheduleTable); 
       }).catch(error => { 
         this.showErrorToast(error);
       }); 
