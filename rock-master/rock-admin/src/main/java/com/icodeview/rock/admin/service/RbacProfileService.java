@@ -9,7 +9,7 @@ import com.icodeview.rock.vo.PageResult;
 
 public interface RbacProfileService  extends IService<RbacProfile> {
     PageResult<RbacProfileVo> getIndex(Integer id,String name,String type,String status,String location,String deviceCode,Integer maintain,Integer repair,String user,String man,String sup,String maintaintype,Integer belongto, Long pageNum, Long pageSize);
-    void createProfile(RbacProfileDto profileDto);
+    Integer createProfile(RbacProfileDto profileDto);
     void deleteProfile(Integer id);
     void updateProfile(RbacProfileDto profileDto);
 

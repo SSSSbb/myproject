@@ -44,7 +44,7 @@ public class RbacMaintainRecordServiceImpl extends ServiceImpl<RbacMaintainRecor
 
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
-    public void createMaintainRecord(RbacMaintainRecordDto maintainRecordDto) {
+    public Integer createMaintainRecord(RbacMaintainRecordDto maintainRecordDto) {
         RbacMaintainRecord record = BeanUtil.copyProperties(maintainRecordDto, RbacMaintainRecord.class);
         record.setEnpSign(maintainRecordDto.getEnpSign());
         record.setEid(maintainRecordDto.getEid());
@@ -53,12 +53,14 @@ public class RbacMaintainRecordServiceImpl extends ServiceImpl<RbacMaintainRecor
         record.setSafer(maintainRecordDto.getSafer());
         record.setBelongto(maintainRecordDto.getBelongto());
         record.setProject(maintainRecordDto.getProject());
+        record.setPic(maintainRecordDto.getPic());
         record.setWork(maintainRecordDto.getWork());
         record.setPartsRecord(maintainRecordDto.getPartsRecord());
         record.setCreatedAt(LocalDateTime.now());
         record.setUpdatedAt(LocalDateTime.now());
         System.out.println(record);
         save(record);
+        return record.getId();
     }
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)

@@ -70,9 +70,9 @@ public class ProfileController {
     @ApiOperationSupport(order = 2, author = "刘紫璇")
     @ApiOperation("添加")
     @PostMapping("create")
-    public CommonResult<Void> create(@RequestBody @Validated RbacProfileDto dto) {
-        rbacProfileService.createProfile(dto);
-        return CommonResult.success("添加成功！");
+    public CommonResult<Integer> create(@RequestBody @Validated RbacProfileDto dto) {
+        Integer createdId = rbacProfileService.createProfile(dto);
+        return CommonResult.success("添加成功！",createdId);
     }
     @ApiOperationSupport(order = 3, author = "刘紫璇")
     @ApiOperation("删除")

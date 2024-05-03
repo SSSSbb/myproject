@@ -2,7 +2,7 @@
 
 <view class="todo-list">
   <block wx:for="{{ list }}" wx:key="id" >
-    <navigator url="/pages/tododetail/tododetail?id={{ item.id }}">
+    <navigator url="/pages/tododetail/tododetail?id={{ item.id }}&username={{ item.username }}&which={{ item.which}}">
     <view class="todo-item">
       <view class="todo-content">{{ item.content }}</view>
       <view class="todo-info">{{ item.createby }}创建于{{ item.created_at }}</view>

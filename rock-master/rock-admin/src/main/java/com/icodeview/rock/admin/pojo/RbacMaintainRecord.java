@@ -16,6 +16,8 @@ public class RbacMaintainRecord {
     private Integer eid;
     private byte[] enpSign;
     private byte[] safeSign;
+    private byte[] pic;
+
     private String maintainer;
     private String safer;
     private Integer belongto;

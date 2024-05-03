@@ -1,2 +1,4 @@
-<!--pages/tododetail/tododetail.wxml-->
-<text>pages/tododetail/tododetail.wxml</text>
+
+<canvas canvas-id='imgCanvas' style='width:{{canvasWidth}}px;height:{{canvasHeight}}px;'></canvas>
+<button bindtap="takePhoto" >拍照打卡</button>
+

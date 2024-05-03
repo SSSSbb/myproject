@@ -46,7 +46,7 @@ public class RbacProfileServiceImpl extends ServiceImpl<RbacProfileMapper, RbacP
 
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
-    public void createProfile(RbacProfileDto profilenDto) {
+    public Integer createProfile(RbacProfileDto profilenDto) {
         RbacProfile profile = BeanUtil.copyProperties(profilenDto, RbacProfile.class);
         profile.setName(profilenDto.getName());
         profile.setType(profilenDto.getType());
@@ -72,6 +72,7 @@ public class RbacProfileServiceImpl extends ServiceImpl<RbacProfileMapper, RbacP
         profile.setUpdatedAt(LocalDateTime.now());
         System.out.println(profile);
         save(profile);
+        return profile.getId();
     }
 
     @Override

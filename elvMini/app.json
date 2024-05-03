@@ -9,7 +9,8 @@
     "pages/todo/todo",
     "pages/his/his",
     "pages/hisdetail/hisdetail",
-    "pages/tododetail/tododetail"
+    "pages/tododetail/tododetail",
+    "pages/maintain/maintain"
   ],
   "window": {
     "navigationBarTextStyle": "black",
@@ -23,7 +24,8 @@
     "t-cell": "tdesign-miniprogram/cell/cell",
     "t-image": "tdesign-miniprogram/image/image",
     "t-notice-bar": "tdesign-miniprogram/notice-bar/notice-bar",
-    "t-swiper": "tdesign-miniprogram/swiper/swiper"  },
+    "t-swiper": "tdesign-miniprogram/swiper/swiper"
+  },
   "tabBar": {
     "selectedColor": "#3277f3",
     "list": [

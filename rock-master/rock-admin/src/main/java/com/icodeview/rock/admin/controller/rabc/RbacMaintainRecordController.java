@@ -65,9 +65,9 @@ public class RbacMaintainRecordController {
     @ApiOperationSupport(order = 3, author = "刘紫璇")
     @ApiOperation("添加")
     @PostMapping("create")
-    public CommonResult<Void> create(@RequestBody @Validated RbacMaintainRecordDto dto) {
-        rbacMaintainRecordService.createMaintainRecord(dto);
-        return CommonResult.success("添加成功！");
+    public CommonResult<Integer> create(@RequestBody @Validated RbacMaintainRecordDto dto) {
+        Integer id = rbacMaintainRecordService.createMaintainRecord(dto);
+        return CommonResult.success("添加成功！",id);
     }
     @ApiOperationSupport(order = 4, author = "刘紫璇")
     @ApiOperation("删除")

@@ -8,7 +8,7 @@ import com.icodeview.rock.vo.PageResult;
 
 public interface RbacMaintainRecordService extends IService<RbacMaintainRecord> {
     PageResult<RbacMaintainRecordVo> getIndex(Integer eid,String work,Integer id,String maintainer,Integer belongto,Integer partsRecord,String safer,Long pageNum, Long pageSize);
-    void createMaintainRecord(RbacMaintainRecordDto maintainRecordDto);
+    Integer createMaintainRecord(RbacMaintainRecordDto maintainRecordDto);
     void deleteMaintainRecord(Integer id);
     void updateMaintainRecord(RbacMaintainRecordDto maintainRecordDto);
 }

@@ -20,6 +20,9 @@ public class RbacMaintainRecordDto {
     @ApiModelProperty(value = "安全员",name = "safer",required = true)
     private String safer;
 
+    @ApiModelProperty(value = "打卡照片",name = "pic",required = true)
+    private byte[] pic;
+
     @ApiModelProperty(value = "所属公司",name = "belongto",required = true)
     private Integer belongto;
     @ApiModelProperty(value = "进行的项目",name = "project",required = true)
