@@ -96,8 +96,8 @@ Page({
   },
   takePhoto() { 
     const _this = this;
-    const { belongto, username } = _this.data;
-    console.log({username});
+    const { belongto, username ,which} = _this.data;
+    console.log({which});
     function getCurrentTime() {
       const now = new Date();
       const year = now.getFullYear();
@@ -135,9 +135,9 @@ Page({
                       encoding: 'base64',
                       success: function (res) {
                         console.log('data:image/jpeg;base64,' + res.data);
-                        post("/maintain/record/create",{ pic: res.data ,belongto:belongto,maintainer:username}).then((res) => {
+                        post("/maintain/record/create",{ pic: res.data ,belongto:belongto,maintainer:username,eid:which}).then((res) => {
                           wx.navigateTo({
-                            url: '/pages/maintain/maintain?id=' + res.data
+                            url: '/pages/maintain/maintain?id=' + res.data +'&eid='+ which
                           });
                         }).catch(error => { 
                           this.showErrorToast(error);

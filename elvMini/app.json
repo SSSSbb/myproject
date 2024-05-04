@@ -10,7 +10,8 @@
     "pages/his/his",
     "pages/hisdetail/hisdetail",
     "pages/tododetail/tododetail",
-    "pages/maintain/maintain"
+    "pages/maintain/maintain",
+    "pages/addParts/addParts"
   ],
   "window": {
     "navigationBarTextStyle": "black",

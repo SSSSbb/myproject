@@ -1,0 +1,54 @@
+<t-cell class="mb-16" title="选择操作的零件" arrow hover note="{{cityText}}" bind:click="onPicker" />
+<t-picker
+  visible="{{cityVisible}}"
+  value="{{cityValue}}"
+  data-key="city"
+  title="{{cityTitle}}"
+  cancelBtn="取消"
+  confirmBtn="确认"
+  bindchange="onPickerChange"
+  bindpick="onColumnChange"
+  bindcancel="onPickerCancel"
+>
+  <t-picker-item options="{{partsprofilelist}}"></t-picker-item>
+</t-picker>
+<t-cell class="mb-16" title="选择具体操作" arrow hover note="{{actionText}}" bind:click="onActionPicker" />
+<t-picker
+  visible="{{actionVisible}}"
+  value="{{actionValue}}"
+  data-key="action"
+  title="{{actionTitle}}"
+  cancelBtn="取消"
+  confirmBtn="确认"
+  bindchange="onActionPickerChange"
+  bindpick="onColumnChange"
+  bindcancel="onActionPickerCancel"
+>
+  <t-picker-item options="{{citys}}"></t-picker-item>
+</t-picker>
+
+<t-cell class="mb-16" title="选择更换后的零件" arrow hover note="{{afterText}}" bind:click="onAfterPicker" />
+<t-picker
+  visible="{{afterVisible}}"
+  value="{{afterValue}}"
+  data-key="after"
+  title="{{afterTitle}}"
+  cancelBtn="取消"
+  confirmBtn="确认"
+  bindchange="onAfterPickerChange"
+  bindpick="onColumnChange"
+  bindcancel="onAfterPickerCancel"
+>
+  <t-picker-item options="{{partsprofilelist}}"></t-picker-item>
+</t-picker>
+<view class="input-example">
+  <view class="input-example__label"> 具体操作 </view>
+  <t-input
+    placeholder="请输入具体操作内容"
+    borderless="{{true}}"
+    style="{{style}}"
+  />
+</view>
+<view class="button-example">
+  <t-button theme="primary" size="large" block bindtap="onSubmit">提交</t-button>
+</view>
