@@ -29,7 +29,7 @@ public class RbacMaintainRecordServiceImpl extends ServiceImpl<RbacMaintainRecor
                 .eq(id != null , RbacMaintainRecord::getId, id)
                 .eq(eid != null , RbacMaintainRecord::getEid, eid)
                 .and(StrUtil.isNotBlank(maintainer), q -> q.like(RbacMaintainRecord::getMaintainer, "%" + maintainer + "%"))
-                .and(StrUtil.isNotBlank(work), q -> q.like(RbacMaintainRecord::getWork, "%" + work + "%"))
+                .and(StrUtil.isNotBlank(work), q -> q.like(RbacMaintainRecord::getAction, "%" + work + "%"))
                 .eq(belongto != null , RbacMaintainRecord::getBelongto, belongto)
                 .eq(partsRecord != null , RbacMaintainRecord::getPartsRecord, partsRecord)
                 .and(StrUtil.isNotBlank(safer), q -> q.like(RbacMaintainRecord::getSafer, "%" + safer + "%"))
@@ -54,7 +54,7 @@ public class RbacMaintainRecordServiceImpl extends ServiceImpl<RbacMaintainRecor
         record.setBelongto(maintainRecordDto.getBelongto());
         record.setProject(maintainRecordDto.getProject());
         record.setPic(maintainRecordDto.getPic());
-        record.setWork(maintainRecordDto.getWork());
+        record.setAction(maintainRecordDto.getAction());
         record.setPartsRecord(maintainRecordDto.getPartsRecord());
         record.setCreatedAt(LocalDateTime.now());
         record.setUpdatedAt(LocalDateTime.now());
@@ -74,7 +74,7 @@ public class RbacMaintainRecordServiceImpl extends ServiceImpl<RbacMaintainRecor
         record.setSafer(maintainRecordDto.getSafer());
         record.setBelongto(maintainRecordDto.getBelongto());
         record.setProject(maintainRecordDto.getProject());
-        record.setWork(maintainRecordDto.getWork());
+        record.setAction(maintainRecordDto.getAction());
         record.setPartsRecord(maintainRecordDto.getPartsRecord());
         record.setUpdatedAt(LocalDateTime.now());
         updateById(record);

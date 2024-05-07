@@ -261,7 +261,7 @@ const RbacTypeList: React.FC = () => {
     },
     {
       title: '工作内容',
-      dataIndex: 'work',
+      dataIndex: 'action',
       valueEnum: options.reduce((acc, { value, label }) => {
         acc[value] = { text: label };
         return acc;
@@ -562,7 +562,7 @@ const RbacTypeList: React.FC = () => {
               }}
             />
            <ProFormSelect
-            name={'work'}
+            name={'action'}
             label={'操作'}
             width="md"
             placeholder={'请选择操作'}

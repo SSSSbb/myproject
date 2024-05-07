@@ -1,19 +1,28 @@
-<!-- 在 wxml 页面中 -->
+<t-pull-down-refresh
+  value="{{enable}}"
+  loadingProps="{{loadingProps}}"
+  loadingTexts="{{['下拉刷新', '松手刷新', '正在刷新', '刷新完成']}}"
+  bind:refresh="onRefresh"
+  bind:scroll="onScroll"
+>
 <view class="container">
   <!-- 项目信息 -->
   <view class="item">
+    <view>
+    打卡图片：
+    <image class="pic" src="data:image/jpeg;base64,{{list[0].pic}}" ></image>
+    </view>
     <view>项目编号：{{ list[0].id }}</view>
     <view>电梯编号：{{ list[0].eid }}</view>
-    <view>维修类型：{{ list[0].work === 'repair' ? '维修' : (list[0].work === 'maintain' ? '保养' : list[0].work) }}</view>
+    <view>维修类型：{{ list[0].action === 'repair' ? '维修' : (list[0].action === 'maintain' ? '保养' : list[0].action) }}</view>
     <view>项目内容：{{ list[0].project }}</view>
     <view>创建时间：{{ list[0].created_at }}</view>
   </view>
 
   <!-- 安全员信息 -->
-  <view class="item">
-    <view class="title">安全员信息</view>
+  <view class="item" wx:if="{{safer.length > 0}}">
+    <view class="title" >安全员信息</view>
     <view class="safer-item">
-      <image class="avatar" src="{{ safer[0].avatar }}" mode="aspectFill"></image>
       <view class="info">
         <view class="username">姓名：{{ safer[0].username }}</view>
         <view class="mobile">电话：{{ safer[0].mobile }}</view>
@@ -21,6 +30,8 @@
       </view>
     </view>
   </view>
+  <view wx:if="{{safer.length == 0}}">
+    <t-button theme="primary" size="large" block bindtap="" >通知安全员</t-button>  </view>
 
   <!-- 电梯信息 -->
   <view class="item">
@@ -40,44 +51,61 @@
       </view>
     </view>
   </view>
-  <view class="item">
-    <view class="title">部件维护记录</view>
-    <view class="part-item">
-      <view class="remain">操作：
-  {{
-    parts[0].action === 'clean' ? '清洁' :
-    parts[0].action === 'lubricate' ? '润滑' :
-    parts[0].action === 'inspect' ? '检查' :
-    parts[0].action === 'adjust' ? '调整' :
-    parts[0].action === 'replace' ? '更换' :
-    parts[0].action
-  }}
-</view>
-      <view class="used">备注：{{ parts[0].extrainfo }}</view>
-      <view class="disposed">创建于：{{ parts[0].created_at }}</view>
-    </view>
+
+
+  <t-popup visible="{{visible}}" bind:visible-change="onVisibleChange" placement="center">
+  <view class="block">
+    <view>操作详细内容：{{cur.extrainfo}}</view>
+    <view wx:if="{{ cur.action === 'replace' }}" class="part-name">更换前零件信息</view>
+    <view wx:if="{{ cur.action != 'replace' }}" class="part-name">操作的零件详情</view>
+    <t-view wx:for="{{cur.beforelist}}" wx:key="id">
+      <view class="part-detail">
+        <view class="part-name">{{item.name}}</view>
+        <view class="part-info">创建时间：{{item.create_at}}</view>
+        <view class="part-info">保养类型：{{item.maintaintype}}</view>
+        <view class="part-info">报废时间：{{item.diposed_at}}</view>
+      </view>
+    </t-view>
+    <view wx:if="{{ cur.action === 'replace' }}" class="part-name">更换后零件信息</view>
+    <t-view wx:for="{{cur.afterlist}}" wx:key="id">
+      <view class="part-detail">
+        <view class="part-name">{{item.name}}</view>
+        <view class="part-info">创建时间：{{item.create_at}}</view>
+        <view class="part-info">保养类型：{{item.maintaintype}}</view>
+        <view class="part-info">报废时间：{{item.diposed_at}}</view>
+      </view>
+    </t-view>
+      <t-icon t-class="close-btn" name="close-circle" size="32" color="#fff" bind:tap="onClose" />
   </view>
-  <view class="item">
-  <view class="title" wx:if="{{ parts[0].action === 'replace' }}">部件更换记录</view>
-  <!-- 更换前零件信息 -->
-  <view class="part-item before" wx:if="{{ parts[0].action === 'replace' }}">
-    <view class="subtitle">更换前零件信息</view>
-    <view class="remain">零件编号：{{ parts_beforelist[0].id }}</view>
-    <view class="remain">零件名称：{{ parts_beforelist[0].name }}</view>
-    <view class="used">报废时间：{{ parts_beforelist[0].diposed_at }}</view>
-    <view class="disposed">创建于：{{ parts_beforelist[0].create_at }}</view>
-  </view>
-  <!-- 更换后零件信息 -->
-  <view class="part-item after" wx:if="{{ parts[0].action === 'replace' }}">
-    <view class="subtitle">更换后零件信息</view>
-    <view class="remain">零件编号：{{ parts_afterlist[0].id }}</view>
-    <view class="used">零件名称：{{ parts_afterlist[0].name }}</view>
-    <view class="disposed">创建于：{{ parts_afterlist[0].create_at }}</view>
-    <view class="disposed">上次保养：{{ parts_afterlist[0].last_maintain }}</view>
-    <view class="disposed">上次维修：{{ parts_afterlist[0].last_repair }}</view>
-    <view class="disposed">维保类型：{{ parts_afterlist[0].maintaintype }}</view>
-    <view class="disposed">运行状态：{{ parts_afterlist[0].status }}</view>
+</t-popup>
+
+
+  <view class="item" wx:if="{{parts.length > 0}}">
+    <view class="title">零件维护记录</view>
+
+
+
+    <view class="list">
+  <view wx:for="{{ parts }}" wx:key="id" >
+  <!-- ----- -->
+<t-button block size="large" variant="outline" theme="primary" bind:tap="handlePopup"
+data-item="{{item}}"
+  >
+  <view>
+    操作：
+    <block wx:if="{{ item.action === 'clean' }}">清洁</block>
+    <block wx:if="{{ item.action === 'lubricate' }}">润滑</block>
+    <block wx:if="{{ item.action === 'inspect' }}">检查</block>
+    <block wx:if="{{ item.action === 'adjust' }}">调整</block>
+    <block wx:if="{{ item.action === 'replace' }}">更换零件</block>
+        创建于{{ item.created_at }}
+  </view>  </t-button>
+
   </view>
 </view>
 
+  </view>
+<t-button theme="primary" size="large" block bindtap="navigateToAddPartsPage" >添加零件操作记录</t-button>
 </view>
+<t-back-top text="顶部" scroll-top="{{scrollTop}}" visibility-height="{{100}}" />
+</t-pull-down-refresh>

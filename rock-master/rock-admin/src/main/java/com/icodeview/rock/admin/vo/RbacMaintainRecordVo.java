@@ -11,11 +11,12 @@ public class RbacMaintainRecordVo {
     private Integer eid;
     private byte[] enpSign;
     private byte[] safeSign;
+    private byte[] pic;
     private String maintainer;
     private String safer;
     private Integer belongto;
     private String project;
-    private String work;
+    private String action;
     private Integer partsRecord;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;

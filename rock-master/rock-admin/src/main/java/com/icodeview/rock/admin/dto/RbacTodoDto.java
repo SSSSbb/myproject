@@ -23,6 +23,9 @@ public class RbacTodoDto {
     @ApiModelProperty(value = "内容",name = "content",required = true)
     private String content;
 
+    @ApiModelProperty(value = "维保记录",name = "record",required = true)
+    private Integer record;
+
     @ApiModelProperty(value = "创建时间",name = "createAt",required = true)
     private LocalDateTime createdAt;
 

@@ -28,7 +28,40 @@
   display: flex;
   align-items: center;
 }
+.button-example {
+  margin: 0 32rpx;
+}
+.todo-item {
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.block {
+  position: relative;
+  width: 400px;
+  height: 500px;
+  background: var(--td-bg-color-container);
+  border-radius: 16rpx;
+}
 
+.close-btn {
+  position: absolute;
+  left: 50%;
+  margin-left: -32rpx;
+  bottom: calc(-1 * (48rpx + 64rpx));
+}
+
+.wrapper {
+  margin: 32rpx;
+  display: block;
+}
+
+
+.list {
+  padding: 10px;
+}
 .avatar
  {
   width: 80rpx;
@@ -69,3 +102,78 @@
   margin-bottom: 10rpx;
 }
 
+/* 在原有样式基础上添加新的样式 */
+.block {
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.part-detail {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  background-color: #fff;
+}
+
+.part-name {
+  font-weight: bold;
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.part-info {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 3px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.demo {
+  padding-bottom: 56rpx;
+  overflow: hidden;
+}
+
+.demo-title {
+  font-size: 48rpx;
+  font-weight: 700;
+  line-height: 64rpx;
+  margin: 48rpx 32rpx 0;
+  color: var(--td-text-color-primary);
+}
+
+.demo-desc {
+  font-size: 28rpx;
+  color: var(--td-text-color-secondary);
+  margin: 16rpx 32rpx 0;
+  line-height: 44rpx;
+}
+
+.pulldown-reflesh__content {
+  margin: 64rpx 32rpx 0;
+  position: relative;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 32rpx;
+}
+
+.text {
+  position: absolute;
+  top: 152rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 32rpx;
+  color: var(--td-text-color-disabled);
+  width: 686rpx;
+}

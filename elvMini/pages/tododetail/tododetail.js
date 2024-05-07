@@ -11,6 +11,7 @@ Page({
   data: {
     isAuth: false,
     src: '',
+    todoid:'',
     belongto:0,
     username:'',
     which:0,
@@ -26,6 +27,7 @@ Page({
       const { user } = app.globalData;
     const { belongto, username } = user;
     this.setData({
+      todoid:id,
       belongto:belongto,
       which:which,
       username:username,
@@ -96,8 +98,8 @@ Page({
   },
   takePhoto() { 
     const _this = this;
-    const { belongto, username ,which} = _this.data;
-    console.log({which});
+    const { belongto, username ,which,todoid} = _this.data;
+    console.log({todoid});
     function getCurrentTime() {
       const now = new Date();
       const year = now.getFullYear();
@@ -136,8 +138,9 @@ Page({
                       success: function (res) {
                         console.log('data:image/jpeg;base64,' + res.data);
                         post("/maintain/record/create",{ pic: res.data ,belongto:belongto,maintainer:username,eid:which}).then((res) => {
+                          console.log({res});
                           wx.navigateTo({
-                            url: '/pages/maintain/maintain?id=' + res.data +'&eid='+ which
+                            url: '/pages/maintain/maintain?id=' + res.data +'&eid='+ which+"&todo="+todoid
                           });
                         }).catch(error => { 
                           this.showErrorToast(error);

@@ -11,6 +11,7 @@ public class RbacTodoVo {
     private Integer id;
     private String username;
     private Integer which;
+    private Integer record;
     private Integer belongto;
     private Integer status;
     private String createby;

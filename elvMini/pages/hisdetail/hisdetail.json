@@ -1,3 +1,9 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "t-pull-down-refresh": "tdesign-miniprogram/pull-down-refresh/pull-down-refresh",
+    "t-button": "tdesign-miniprogram/button/button",
+    "t-popup": "tdesign-miniprogram/popup/popup",
+    "t-skeleton": "tdesign-miniprogram/skeleton/skeleton",
+    "t-back-top": "tdesign-miniprogram/back-top/back-top"
+  }
 }

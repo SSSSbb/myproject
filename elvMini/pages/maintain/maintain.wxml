@@ -12,25 +12,17 @@
 >
   <t-picker-item options="{{citys}}"></t-picker-item>
 </t-picker>
-<view class="button-example">
-  <t-button theme="primary" size="large" block bindtap="navigateToAddPartsPage" >添加零件操作记录</t-button>
-</view>
-<block wx:if="{{cityValue === 'replace'}}">
-<block wx:if="{{partsrecordlist && partsrecordlist.length}}">
-  <view wx:for="{{partsrecordlist}}" wx:key="id" class="record-item">
-    <view class="record-item-content">
-    </view>
-    <button class="delete-button" bind:tap="deleteRecord" data-id="{{item.id}}">删除</button>
-  </view>
-</block>
-</block>
 
 <view class="input-example">
   <view class="input-example__label"> 具体操作 </view>
-  <t-input
+  <input
     placeholder="请输入具体操作内容"
     borderless="{{true}}"
     style="{{style}}"
+    bindinput="onInput"
   />
 </view>
 
+<view class="button-example">
+  <t-button theme="primary" size="large" block bindtap="onSubmit">提交</t-button>
+</view>

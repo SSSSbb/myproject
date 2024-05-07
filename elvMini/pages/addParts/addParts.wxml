@@ -43,10 +43,11 @@
 </t-picker>
 <view class="input-example">
   <view class="input-example__label"> 具体操作 </view>
-  <t-input
+  <input
     placeholder="请输入具体操作内容"
     borderless="{{true}}"
     style="{{style}}"
+    bindinput="onInput"
   />
 </view>
 <view class="button-example">

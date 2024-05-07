@@ -30,6 +30,7 @@ public class RbacMaintainRecordController {
             @ApiImplicitParam(name = "id",value = "ID"),
             @ApiImplicitParam(name = "eid",value = "eID"),
             @ApiImplicitParam(name = "enpSign",value = "使用单位签名"),
+            @ApiImplicitParam(name = "pic",value = "打卡图片"),
             @ApiImplicitParam(name = "safeSign",value = "安全员签名"),
             @ApiImplicitParam(name = "maintainer",value = "维保员"),
             @ApiImplicitParam(name = "safer",value = "安全员"),

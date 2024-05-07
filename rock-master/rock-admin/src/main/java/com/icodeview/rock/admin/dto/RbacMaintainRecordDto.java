@@ -28,7 +28,7 @@ public class RbacMaintainRecordDto {
     @ApiModelProperty(value = "进行的项目",name = "project",required = true)
     private String project;
     @ApiModelProperty(value = "工作",name = "work",required = true)
-    private String work;
+    private String action;
     @ApiModelProperty(value = "创建时间",name = "createAt",required = true)
     private LocalDateTime createAt;
     @ApiModelProperty(value = "更新时间",name = "updateAt",required = true)

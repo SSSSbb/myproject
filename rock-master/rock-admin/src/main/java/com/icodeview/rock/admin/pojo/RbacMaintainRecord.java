@@ -22,7 +22,7 @@ public class RbacMaintainRecord {
     private String safer;
     private Integer belongto;
     private String project;
-    private String work;
+    private String action;
     private Integer partsRecord;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;

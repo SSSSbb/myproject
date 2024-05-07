@@ -17,6 +17,8 @@ public class RbacTodo {
     private String username;
     private Integer which;
     private Integer belongto;
+    private Integer record;
+
     private Integer status;
     private String createby;
     private String content;

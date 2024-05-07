@@ -10,7 +10,9 @@ Page({
    */
   data: {
     id:'',
+    inputContent:'',
     which:'',
+    todoid:'',
     style: 'border: 2rpx solid var(--td-input-border-color-example);border-radius: 12rpx;',
     cityText: '',
     action:'',
@@ -19,11 +21,8 @@ Page({
     partsprofilelist:[],
     cityTitle: '',
     citys: [
-      { label: '清洁', value: 'clean' },
-      { label: '润滑', value: 'lubricate' },
-      { label: '检查', value: 'inspect' },
-      { label: '调整', value: 'adjust' },
-      { label: '更换零件', value: 'replace' },
+      { label: '维修', value: 'repair' },
+      { label: '维保', value: 'maintain' },
     ],
   },
 
@@ -51,38 +50,43 @@ Page({
   onTitlePicker() {
     this.setData({ cityVisible: true, cityTitle: '选择操作' });
   },
-  navigateToAddPartsPage: function () {
-    wx.navigateTo({
-      url: '/pages/addParts/addParts?id='+this.data.id+"&which="+this.data.which // 这里的路径是你要跳转的页面路径
+  onSubmit(){
+    console.log(this.data.id);
+    console.log(this.data.inputContent);
+    const action = this.data.cityValue[0];
+     post("/maintain/record/update",{ id:this.data.id,action:action,project:this.data.inputContent,}).then((res) => {
+      console.log({res});
+      post("/todo/update",{ id:this.data.todoid,status:1,record:this.data.id}).then((res) => {
+        console.log({res});
+        // wx.navigateTo({
+        //   url: '/pages/home/home'
+        // });
+      }).catch(error => { 
+        this.showErrorToast(error);
+      });
+    }).catch(error => { 
+      this.showErrorToast(error);
+    });
+  },
+  onInput: function (event) {
+    const inputValue = event.detail.value; // 获取用户输入的内容
+    console.log('用户输入的具体操作内容:', inputValue);
+    // 可以将输入的内容存储到 data 中，或者进行其他操作
+    this.setData({
+      inputContent: inputValue
     });
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    const{id,eid} = options;
+    const id = options.id;
+    const todoid = options.todo;
+    console.log({todoid});
     this.setData({
       id:id,
-      which:eid,
-    })
-    const { user } = app.globalData;
-    const{belongto,username} = user;
-     get("/parts/record/index",{ record_id: id}).then((res) => {
-      console.log({res});
-      this.setData({
-        partsrecordlist:res.data.list,
-      })
-    }).catch(error => { 
-      this.showErrorToast(error);
+      todoid:todoid,
     });
-    
-    // post("/maintain/record/update",{ id: id}).then((res) => {
-    //   wx.navigateTo({
-    //     url: '/pages/maintain/maintain?id=' + res.data
-    //   });
-    // }).catch(error => { 
-    //   this.showErrorToast(error);
-    // });
   },
 
   /**

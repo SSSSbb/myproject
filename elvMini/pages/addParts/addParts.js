@@ -13,6 +13,7 @@ Page({
     action:'',
     partsprofilelist:[],
     cityText: '',
+    inputContent:'',
     belongto:'',
     cityValue: [],
     cityTitle: '',
@@ -85,7 +86,7 @@ Page({
     });
   },
   onActionPicker() {
-    this.setData({ actionVisible: true, actionTitle: '选择零件' });
+    this.setData({ actionVisible: true, actionTitle: '选择具体操作' });
   },
   onAfterPicker() {
     this.setData({ afterVisible: true, afterTitle: '选择更换后的零件' });
@@ -96,16 +97,27 @@ Page({
   onSubmit() {
     const {id,which,belongto} = this.data;
     const {cityValue,actionValue,afterValue} = this.data;
-    console.log(this.data.id);
-    console.log("id"+id+" which"+which+"  belongto"+belongto+"  cityValue:"+cityValue+" actionValue:"+actionValue+" afterValue"+afterValue);
-    post("/parts/record/create",{ part_id:cityValue,action:actionValue,replaced_part:afterValue,record_id:id,which: which,belongto:belongto}).then((res) => {
+    console.log({cityValue});
+    console.log({actionValue});
+    console.log({afterValue});
+    post("/parts/record/create",{ part_id:cityValue[0],action:actionValue[0],replace_part:afterValue[0],extrainfo:this.data.inputContent,record_id:id,which: which,belongto:belongto}).then((res) => {
       console.log({res});  
+  wx.navigateBack(); // 返回上一页
     }).catch(error => { 
       this.showErrorToast(error);
-    });   },
+    });  
+   },
   /**
    * 生命周期函数--监听页面加载
    */
+  onInput: function (event) {
+    const inputValue = event.detail.value; // 获取用户输入的内容
+    console.log('用户输入的具体操作内容:', inputValue);
+    // 可以将输入的内容存储到 data 中，或者进行其他操作
+    this.setData({
+      inputContent: inputValue
+    });
+  },
   showErrorToast(error) {
     wx.showToast({
       icon: "none",
@@ -115,16 +127,15 @@ Page({
   onLoad(options) {
     const { user } = app.globalData;
     const{belongto,username} = user;
-
-    const {id,which} = options;
-
+    const id = options.id;
+    console.log({id});
+    const which = options.which;
     this.setData({
       id: id,
       which:which,
       belongto:belongto,
     });
     console.log('ID:', this.data.id);
-  console.log('Belongto:', this.data.belongto);
     get("/parts/partsprofile/index",{ which: which,belongto:belongto}).then((res) => {
       const partsprofilelist = res.data.list.map(item => {
         return {

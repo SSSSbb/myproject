@@ -65,7 +65,7 @@ public class RbacTodoServiceImpl extends ServiceImpl<RbacTodoMapper, RbacTodo> i
         todo.setStatus(todoDto.getStatus());
         todo.setBelongto(todoDto.getBelongto());
         todo.setCreateby(todoDto.getCreateby());
-        todo.setCreatedAt(LocalDateTime.now());
+        todo.setFinishAt(LocalDateTime.now());
         updateById(todo);
 
     }
