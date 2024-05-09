@@ -1,40 +1,4 @@
-<t-pull-down-refresh
-  value="{{enable}}"
-  loadingProps="{{loadingProps}}"
-  loadingTexts="{{['下拉刷新', '松手刷新', '正在刷新', '刷新完成']}}"
-  bind:refresh="onRefresh"
-  bind:scroll="onScroll"
->
-<view class="container">
-  <!-- 项目信息 -->
-  <view class="item">
-    <view>
-    打卡图片：
-    <image class="pic" src="data:image/jpeg;base64,{{list[0].pic}}" ></image>
-    </view>
-    <view>项目编号：{{ list[0].id }}</view>
-    <view>电梯编号：{{ list[0].eid }}</view>
-    <view>维修类型：{{ list[0].action === 'repair' ? '维修' : (list[0].action === 'maintain' ? '保养' : list[0].action) }}</view>
-    <view>项目内容：{{ list[0].project }}</view>
-    <view>创建时间：{{ list[0].created_at }}</view>
-  </view>
-
-  <!-- 安全员信息 -->
-  <view class="item" wx:if="{{safer.length > 0}}">
-    <view class="title" >安全员信息</view>
-    <view class="safer-item">
-      <view class="info">
-        <view class="username">姓名：{{ safer[0].username }}</view>
-        <view class="mobile">电话：{{ safer[0].mobile }}</view>
-        <view class="role">角色：{{ safer[0].role.name }}</view>
-      </view>
-    </view>
-  </view>
-  <view wx:if="{{safer.length == 0}}">
-    <t-button theme="primary" size="large" block bindtap="" >通知安全员</t-button>  </view>
-
-  <!-- 电梯信息 -->
-  <view class="item">
+<view class="profile">
     <view class="title">电梯信息</view>
     <view class="profile-item">
       <view class="info">
@@ -52,8 +16,33 @@
     </view>
   </view>
 
+<view class="maintain-item">
+  <view class="item">
+    维保内容
+    </view>
+    <view class="item">
+    维保员打卡图片：
+    <image class="pic" src="data:image/jpeg;base64,{{maintainrecord[0].pic}}" ></image>
+    </view>
+    <view class="item">项目编号：{{ maintainrecord[0].id }}</view>
+    <view class="item">电梯编号：{{ maintainrecord[0].eid }}</view>
+    <view class="item">维修类型：{{ maintainrecord[0].action === 'repair' ? '维修' : (maintainrecord[0].action === 'maintain' ? '保养' : maintainrecord[0].action) }}</view>
+    <view class="item">项目内容：{{ maintainrecord[0].project }}</view>
+    <view class="item">创建时间：{{ maintainrecord[0].created_at }}</view>
+  </view>
+  <!-- 安全员信息 -->
+  <view class="maintain">
+    <view class="title" >维保员信息</view>
+    <view class="maintain-item">
+      <view class="info">
+        <view class="username">姓名：{{ maintainerlist[0].username }}</view>
+        <view class="mobile">电话：{{ maintainerlist[0].mobile }}</view>
+        <view class="role">角色：{{ maintainerlist[0].role.name }}</view>
+      </view>
+    </view>
+  </view>
 
-  <t-popup visible="{{visible}}" bind:visible-change="onVisibleChange" placement="center">
+ <t-popup visible="{{visible}}" bind:visible-change="onVisibleChange" placement="center">
   <view class="block">
     <view>操作详细内容：{{cur.extrainfo}}</view>
     <view wx:if="{{ cur.action === 'replace' }}" class="part-name">更换前零件信息</view>
@@ -78,12 +67,12 @@
       <t-icon t-class="close-btn" name="close-circle" size="32" color="#fff" bind:tap="onClose" />
   </view>
 </t-popup>
+
   <view class="item" wx:if="{{parts.length > 0}}">
     <view class="title">零件维护记录</view>
     <view class="list">
   <view wx:for="{{ parts }}" wx:key="id" >
-  <!-- ----- -->
-<t-button block size="large" variant="outline" theme="primary" bind:tap="handlePopup"
+  <t-button block size="large" variant="outline" theme="primary" bind:tap="handlePopup"
 data-item="{{item}}">
   <view>
     操作：
@@ -97,7 +86,4 @@ data-item="{{item}}">
   </view>
 </view>
   </view>
-<t-button theme="primary" size="large" block bindtap="navigateToAddPartsPage" >添加零件操作记录</t-button>
-</view>
-<t-back-top text="顶部" scroll-top="{{scrollTop}}" visibility-height="{{100}}" />
-</t-pull-down-refresh>
+<t-button theme="primary" size="large" block >确认提交</t-button>

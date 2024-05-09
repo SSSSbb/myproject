@@ -58,6 +58,7 @@ public class RbacMaintainRecordServiceImpl extends ServiceImpl<RbacMaintainRecor
         record.setPartsRecord(maintainRecordDto.getPartsRecord());
         record.setCreatedAt(LocalDateTime.now());
         record.setUpdatedAt(LocalDateTime.now());
+        record.setSaferpic(maintainRecordDto.getSaferpic());
         System.out.println(record);
         save(record);
         return record.getId();
@@ -70,6 +71,7 @@ public class RbacMaintainRecordServiceImpl extends ServiceImpl<RbacMaintainRecor
         record.setEid(maintainRecordDto.getEid());
         record.setEnpSign(maintainRecordDto.getEnpSign());
         record.setSafeSign(maintainRecordDto.getSafeSign());
+        record.setSaferpic(maintainRecordDto.getSaferpic());
         record.setMaintainer(maintainRecordDto.getMaintainer());
         record.setSafer(maintainRecordDto.getSafer());
         record.setBelongto(maintainRecordDto.getBelongto());

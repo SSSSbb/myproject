@@ -54,13 +54,10 @@ Page({
     console.log(this.data.id);
     console.log(this.data.inputContent);
     const action = this.data.cityValue[0];
-     post("/maintain/record/update",{ id:this.data.id,action:action,project:this.data.inputContent,}).then((res) => {
+     post("/maintain/record/update",{ id:this.data.id,action:action,project:this.data.inputContent,safer:'0'}).then((res) => {
       console.log({res});
       post("/todo/update",{ id:this.data.todoid,status:1,record:this.data.id}).then((res) => {
         console.log({res});
-        // wx.navigateTo({
-        //   url: '/pages/home/home'
-        // });
       }).catch(error => { 
         this.showErrorToast(error);
       });

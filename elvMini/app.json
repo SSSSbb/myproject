@@ -11,7 +11,8 @@
     "pages/hisdetail/hisdetail",
     "pages/tododetail/tododetail",
     "pages/maintain/maintain",
-    "pages/addParts/addParts"
+    "pages/addParts/addParts",
+    "pages/safemaintain/safemaintain"
   ],
   "window": {
     "navigationBarTextStyle": "black",

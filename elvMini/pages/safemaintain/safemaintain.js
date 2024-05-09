@@ -1,5 +1,7 @@
-// pages/hisdetail/hisdetail.js
+// pages/safemaintain/safemaintain.js
 const { get } = require("../../api/api");
+const { post } = require("../../api/api");
+
 const app = getApp();
 Page({
 
@@ -7,84 +9,22 @@ Page({
    * 页面的初始数据
    */
   data: {
-    enable: false,
-    loadingProps: {
-      size: '50rpx',
-    },
-    scrollTop: 0,
-    list: [], 
-    safer:[],
-    cur:{},
+    recordid:'',
+    maintainrecord:[],
+    maintainer:'',
+    maintainerlist:[],
+    which:'',
+    visible:'',
+    profile:[],
     item:[],
     belongto:'',
-    profile:[],
-    eid:'',
-    id:'',
     parts:[],
-    parts_beforelist:[],
-    parts_afterlist:[],
-    parts_before:0,
-    parts_after:0,
+    cur:[],
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  ready() {
-    this.setData({ enable: true });
-    setTimeout(() => {
-      this.setData({ enable: false });
-    }, 1000);
-  },
-  onRefresh() {
-    this.setData({ enable: true });
-    setTimeout(() => {
-      this.setData({ enable: false });
-    }, 1500);
-  },
-  onScroll(e) {
-    const { scrollTop } = e.detail;
-    this.setData({ scrollTop });
-  },
-  onLoad(options) {
-    const { user } = app.globalData;
-    const { belongto } = user;
-    const id = options.id;
-    this.setData({id:id,belongto:belongto})
-    get("/maintain/record/index",{belongto,id}).then(({ data: { list } }) => {
-      console.log({list});
-      this.setData({ list });
-    }).catch(error => { 
-      this.showErrorToast(error);
-    });
-    const saferUsername =options.safer;
-    console.log({saferUsername});
-    if(saferUsername){
-      get("/rbac/user/index",{belongto,username: saferUsername}).then(({ data: { list } }) => {
-        this.setData({ safer:list });
-      }).catch(error => { 
-        this.showErrorToast(error);
-      }); 
-    }
-    const eid = options.eid;
-    this.setData({eid:eid});
-    console.log(this.data.id);
-    console.log(this.data.eid);
-    get("/profile/index",{belongto,id: eid}).then(({ data: { list } }) => {
-      console.log({list});
-      this.setData({ profile:list });
-    }).catch(error => { 
-      this.showErrorToast(error);
-    }); 
-    const partsRecord = options.parts_record;
-    console.log({partsRecord});
-    get("/parts/record/index",{belongto,record_id: id}).then(({ data: { list } }) => {
-      console.log({list});
-            this.setData({ parts:list });
-    }).catch(error => { 
-      this.showErrorToast(error);
-    }); 
-  },
   handlePopup(e) {
     const { item } = e.currentTarget.dataset;
     console.log({ item });
@@ -121,7 +61,6 @@ Page({
         this.showErrorToast(error);
       });
   },
-  
   onVisibleChange(e) {
     this.setData({
       visible: e.detail.visible,
@@ -132,12 +71,50 @@ Page({
       visible: false,
     });
   },
-navigateToAddPartsPage() {
-  console.log(this.data.id);
-    wx.navigateTo({
-      url: '/pages/addParts/addParts?id='+this.data.id+"&which="+this.data.eid 
+  onLoad(options) {
+    const { user } = app.globalData;
+    const { belongto } = user;
+    const id = options.id;
+    const which = options.which;
+    const safer = options.safer;
+    this.setData({
+      belongto:belongto,
+      recordid:id,
+      which:which,
+    })
+    get("/profile/index",{id: which}).then(({ data: { list } }) => {
+      console.log({list});
+      this.setData({ profile:list });
+    }).catch(error => { 
+      this.showErrorToast(error);
+    }); 
+    get("/parts/record/index",{belongto,record_id: id}).then(({ data: { list } }) => {
+      console.log({list});
+            this.setData({ parts:list });
+    }).catch(error => { 
+      this.showErrorToast(error);
+    });
+    get("/maintain/record/index",{ id:
+      id}).then((res) => {
+      console.log({res});
+      this.setData({
+        maintainrecord:res.data.list,
+        maintainer:res.data.list[0].maintainer,
+      })
+      get("/rbac/user/index",{ username:
+        this.data.maintainer}).then((res) => {
+        console.log({res});
+        this.setData({
+          maintainerlist:res.data.list,
+        })
+      }).catch(error => { 
+        this.showErrorToast(error);
+      });
+    }).catch(error => { 
+      this.showErrorToast(error);
     });
   },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

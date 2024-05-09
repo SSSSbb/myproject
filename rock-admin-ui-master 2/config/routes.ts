@@ -171,6 +171,11 @@
         path: '/maintain/record/index',
         component: './maintain/record/index',
       },
+
+      {
+        path: '/maintain/space/index',
+        component: './maintain/space/index',
+      },
       
     ],
   },

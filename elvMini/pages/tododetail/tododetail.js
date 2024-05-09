@@ -11,6 +11,7 @@ Page({
   data: {
     isAuth: false,
     src: '',
+    recordid:'',
     todoid:'',
     belongto:0,
     username:'',
@@ -23,15 +24,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-      const {id,which} = options;
+      const {id,which,recordid} = options;
       const { user } = app.globalData;
     const { belongto, username } = user;
     this.setData({
       todoid:id,
+      recordid:recordid,
       belongto:belongto,
       which:which,
       username:username,
     })
+    console.log({recordid});
     const _this = this
     wx.getSetting({
       success: res => {
@@ -98,8 +101,8 @@ Page({
   },
   takePhoto() { 
     const _this = this;
-    const { belongto, username ,which,todoid} = _this.data;
-    console.log({todoid});
+    const { belongto, username ,which,todoid,recordid} = _this.data;
+    console.log({recordid});
     function getCurrentTime() {
       const now = new Date();
       const year = now.getFullYear();
@@ -137,14 +140,27 @@ Page({
                       encoding: 'base64',
                       success: function (res) {
                         console.log('data:image/jpeg;base64,' + res.data);
-                        post("/maintain/record/create",{ pic: res.data ,belongto:belongto,maintainer:username,eid:which}).then((res) => {
-                          console.log({res});
-                          wx.navigateTo({
-                            url: '/pages/maintain/maintain?id=' + res.data +'&eid='+ which+"&todo="+todoid
+                        if(recordid){
+                          post("/maintain/record/update",{ id:
+                            recordid,saferpic:res.data}).then((res) => {
+                            console.log({res});
+                            wx.navigateTo({
+                              url: '/pages/safemaintain/safemaintain?id=' + recordid +'&which='+which+'&safer='+username
+                            });
+                          }).catch(error => { 
+                            this.showErrorToast(error);
                           });
-                        }).catch(error => { 
-                          this.showErrorToast(error);
-                        });
+                        }
+                        else{
+                          post("/maintain/record/create",{ pic: res.data ,belongto:belongto,maintainer:username,eid:which}).then((res) => {
+                            console.log({res});
+                            wx.navigateTo({
+                              url: '/pages/maintain/maintain?id=' + res.data +'&eid='+ which+"&todo="+todoid
+                            });
+                          }).catch(error => { 
+                            this.showErrorToast(error);
+                          });
+                        }
                       }
                     });
                   }

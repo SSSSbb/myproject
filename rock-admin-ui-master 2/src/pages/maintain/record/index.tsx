@@ -258,6 +258,9 @@ const RbacTypeList: React.FC = () => {
     {
       title: '安全员',
       dataIndex: 'safer',
+      render: (safer) => {
+        return safer === "0" ? '-' : safer;
+      },
     },
     {
       title: '工作内容',

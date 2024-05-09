@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Row, Col } from 'antd';
+import { Card, Row, Col, Space } from 'antd';
 import { Column } from '@ant-design/charts';
 import { currentUser as queryCurrentUser } from '@/services/api';
 import { queryProfile } from '@/pages/profile/service';
 import { Pie } from '@ant-design/plots';
+import { CityListControl, MapvglLayer, MapvglView, Marker } from 'react-bmapgl';
 //todo "the value is 0"
 const Page: React.FC = () => {
   const [locationData, setLocationData] = useState([]);
@@ -141,7 +142,28 @@ const Page: React.FC = () => {
   };
 
   return (
-    <Row gutter={16}>
+    <div>
+      <Row gutter={16}>
+     
+      {/* <Map
+        center={{lng:105.403119, lat:38.028658}}
+        zoom={4}
+        // mapStyleV2={{styleJson: blackstyle}}
+      >
+        <MapvglView effects={['bright']}>
+          <MapvglLayer
+            type="PointLayer"
+            // data={point}
+            options={{
+              blend: 'lighter',
+              size: 12,
+              color: 'rgb(255, 53, 0, 0.6)'
+            }}
+          />
+        </MapvglView>
+      </Map> */}
+      </Row>
+        <Row gutter={16}>
       <Col span={12}>
         <Card title="安装地点" style={{ height: 400 }}>
           <Column {...locationChartConfig} />
@@ -153,6 +175,11 @@ const Page: React.FC = () => {
         </Card>
       </Col>
     </Row>
+    
+    </div>
+  
+    
+    
   );
 };
 
