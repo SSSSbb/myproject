@@ -8,6 +8,7 @@ Page({
    */
   data: {
     list: [], 
+    codeid:'',
   },
  
   /**
@@ -16,13 +17,29 @@ Page({
   onLoad(options) {
     const { user } = app.globalData;
     const { belongto, username } = user;
-    const maintainer = username;
-    get("/maintain/record/index",{belongto,maintainer}).then(({ data: { list } }) => {
-      console.log({list});
-      this.setData({ list });
+    console.log({user});
+    get("/rbac/user/index",{username:username}).then(({ data: { list } }) => {
+      const codeid = list[0].role.id;
+      this.setData({codeid:codeid})
+      const maintainer = username;
+      if(codeid==4){
+        get("/maintain/record/index",{belongto,safer:maintainer}).then(({ data: { list } }) => {
+          console.log({list});
+          this.setData({ list });
+        }).catch(error => { 
+          this.showErrorToast(error);
+        });
+       }else{
+        get("/maintain/record/index",{belongto,maintainer}).then(({ data: { list } }) => {
+          console.log({list});
+          this.setData({ list });
+        }).catch(error => { 
+          this.showErrorToast(error);
+        });
+       } 
     }).catch(error => { 
       this.showErrorToast(error);
-    }); 
+    });    
   },
 
   /**

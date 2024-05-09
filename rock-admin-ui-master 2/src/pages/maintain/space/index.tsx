@@ -171,6 +171,7 @@ export default () => {
               request={async () => {
                 const response = await queryUser({
                   belongto: belongto,
+                  role:4,
                 });
                 console.log({ response });
                 return response.data!.list!.map((item) => ({

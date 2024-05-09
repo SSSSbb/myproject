@@ -9,8 +9,12 @@
   <!-- 项目信息 -->
   <view class="item">
     <view>
-    打卡图片：
+    维保员打卡图片：
     <image class="pic" src="data:image/jpeg;base64,{{list[0].pic}}" ></image>
+    </view>
+    <view>
+    维保员打卡图片：
+    <image class="pic" src="data:image/jpeg;base64,{{list[0].saferpic}}" ></image>
     </view>
     <view>项目编号：{{ list[0].id }}</view>
     <view>电梯编号：{{ list[0].eid }}</view>
@@ -97,7 +101,7 @@ data-item="{{item}}">
   </view>
 </view>
   </view>
-<t-button theme="primary" size="large" block bindtap="navigateToAddPartsPage" >添加零件操作记录</t-button>
+<t-button theme="primary" size="large" block bindtap="navigateToAddPartsPage" wx:if="{{codeid==3}}">添加零件操作记录</t-button>
 </view>
 <t-back-top text="顶部" scroll-top="{{scrollTop}}" visibility-height="{{100}}" />
 </t-pull-down-refresh>

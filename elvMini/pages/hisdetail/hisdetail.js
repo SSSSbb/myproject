@@ -15,6 +15,7 @@ Page({
     list: [], 
     safer:[],
     cur:{},
+    codeid:'',
     item:[],
     belongto:'',
     profile:[],
@@ -49,7 +50,10 @@ Page({
   onLoad(options) {
     const { user } = app.globalData;
     const { belongto } = user;
+    console.log({user});
     const id = options.id;
+    const codeid = options.codeid;
+    this.setData({codeid});
     this.setData({id:id,belongto:belongto})
     get("/maintain/record/index",{belongto,id}).then(({ data: { list } }) => {
       console.log({list});
