@@ -49,6 +49,8 @@ this.setData({date});
                const dayOfyear = (date - new Date(date.getFullYear(), 0, 0)) / 86400000;
 const weeknumber = Math.ceil((dayOfyear + 1) / 7);
                const temp = year+''+weeknumber;
+               console.log({temp});
+               console.log(this.data.date);
                if(temp==this.data.date){
                 scheduletable[slot][weekday] = item; 
                }

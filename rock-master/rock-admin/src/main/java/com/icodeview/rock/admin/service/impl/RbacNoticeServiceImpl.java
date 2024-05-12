@@ -13,13 +13,14 @@ import com.icodeview.rock.admin.service.RbacNoticeService;
 import com.icodeview.rock.admin.vo.RbacNoticeVo;
 import com.icodeview.rock.admin.vo.RbacTypeVo;
 import com.icodeview.rock.vo.PageResult;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Service
 public class RbacNoticeServiceImpl extends ServiceImpl<RbacNoticeMapper, RbacNotice> implements RbacNoticeService {
     @Override
     public PageResult<RbacNoticeVo> getIndex(String createby, Integer status, Integer belongto, Long pageNum, Long pageSize){

@@ -22,7 +22,16 @@
     bindinput="onInput"
   />
 </view>
-
+<view class="container column-me">
+  <view class="tips">
+    请绘制清晰可见的签名并保存
+  </view>
+  <canvas class="canvas" id="canvas" type="2d" disable-scroll="true" bindtouchstart="canvasStart" bindtouchmove="canvasMove" bindtouchend="canvasEnd" touchcancel="canvasEnd" binderror="canvasIdErrorCallback"></canvas>
+  <view class='addBtn'>
+    <button type="default" class='txt reset' bindtap="clickClear">重新签名</button>
+    <button type="default" class='txt' bindtap="clickSave">保存签名</button>
+  </view>
+</view>
 <view class="button-example">
   <t-button theme="primary" size="large" block bindtap="onSubmit">提交</t-button>
 </view>

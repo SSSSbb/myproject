@@ -12,8 +12,8 @@
     维保员打卡图片：
     <image class="pic" src="data:image/jpeg;base64,{{list[0].pic}}" ></image>
     </view>
-    <view>
-    维保员打卡图片：
+    <view wx:if="{{list[0].saferpic}}">
+    安全员打卡图片：
     <image class="pic" src="data:image/jpeg;base64,{{list[0].saferpic}}" ></image>
     </view>
     <view>项目编号：{{ list[0].id }}</view>
@@ -34,8 +34,6 @@
       </view>
     </view>
   </view>
-  <view wx:if="{{safer.length == 0}}">
-    <t-button theme="primary" size="large" block bindtap="" >通知安全员</t-button>  </view>
 
   <!-- 电梯信息 -->
   <view class="item">

@@ -12,13 +12,12 @@ import { Button, DatePicker, Space } from 'antd';
 import { PlusOutlined, ZoomInOutlined } from '@ant-design/icons';
 
 import moment from 'moment';
+import { querySlot } from '../slot/service';
 
 const RbacTypeList: React.FC = () => {
 
   const actionRef = useRef<ActionType>();
   const [form] = ProForm.useForm<TableListItem>();
-  const [createModalVisible, handleCreateModalVisible] = useState<boolean>(false);
-  const [selectedWeek, setSelectedWeek] = useState<string>(); 
   const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
   const access: API.UserAccessItem = useAccess();
   const [startOfWeek, setStartOfWeek] = useState<any>();
@@ -53,15 +52,21 @@ console.log(endOfWeek.format('YYYY-MM-DD'));
     });
     return columns;
   };
-  const generateData = (scheduleData) => {
+  const generateData = async (scheduleData) => {
     console.log({scheduleData});
     const data = [];
+    const slotdata = await querySlot({belongto:belongto});
+    console.log({slotdata});
+    const slotsMap = {};
+slotdata.data.list.forEach((item) => {
+    slotsMap[item.code] = item.slot;
+});
     const slots = [ 0, 1, 2, 3, 4];
     slots.forEach((slot) => {
       const rowData = {
         key: `slot${slot}`,
-        slot: `时段${slot}`,
-      };
+        slot: slotsMap[slot],
+    };
       // 根据星期填充数据
       for (let i = 0; i < 7; i++) {
         const item = scheduleData.find((item) => item.weekday === i && item.slot === slot);

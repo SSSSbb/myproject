@@ -86,4 +86,16 @@ data-item="{{item}}">
   </view>
 </view>
   </view>
-<t-button theme="primary" size="large" block >确认提交</t-button>
+  <view class="container column-me">
+  <view class="tips">
+    请确认无误后请绘制清晰可见的签名并保存
+  </view>
+  <canvas class="canvas" id="canvas" type="2d" disable-scroll="true" bindtouchstart="canvasStart" bindtouchmove="canvasMove" bindtouchend="canvasEnd" touchcancel="canvasEnd" binderror="canvasIdErrorCallback"></canvas>
+  <view class='addBtn'>
+    <button type="default" class='txt reset' bindtap="clickClear">重新签名</button>
+    <button type="default" class='txt' bindtap="clickSave">保存签名</button>
+  </view>
+</view>
+<t-button theme="danger" size="large" block bindtap="onRetrun" >不合格 点击退回</t-button>
+
+<t-button theme="primary" size="large" block bindtap="onSubmit">确认提交</t-button>

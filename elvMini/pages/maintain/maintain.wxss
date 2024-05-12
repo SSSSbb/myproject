@@ -55,3 +55,48 @@
 .btn--confirm {
   color: #0052d9;
 }
+
+.canvas {
+  width: 100%;
+  flex: 1;
+  box-sizing: border-box;
+  margin-top: 10rpx;
+}
+ 
+.tips {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #aaa;
+  font-size: 20rpx;
+}
+ 
+.addBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: #fff;
+  z-index: 100;
+  padding: 10rpx 0;
+}
+ 
+.addBtn .txt {
+  text-align: center;
+  width: 200rpx;
+  font-size: 15rpx;
+  border-radius: 100px;
+  background: #0097fe;
+  color: #fff;
+  box-sizing: border-box;
+  margin: 0 20rpx;
+  padding: 10px;
+  z-index: 100;
+}
+ 
+.reset {
+  background: #fff !important;
+  border: 1px solid #cccccc;
+  color: #333333 !important;
+}

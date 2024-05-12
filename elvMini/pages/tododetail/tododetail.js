@@ -140,12 +140,12 @@ Page({
                       encoding: 'base64',
                       success: function (res) {
                         console.log('data:image/jpeg;base64,' + res.data);
-                        if(recordid){
+                        if(recordid!=0){
                           post("/maintain/record/update",{ id:
                             recordid,saferpic:res.data}).then((res) => {
                             console.log({res});
                             wx.navigateTo({
-                              url: '/pages/safemaintain/safemaintain?id=' + recordid +'&which='+which+'&safer='+username
+                              url: '/pages/safemaintain/safemaintain?id=' + recordid +'&which='+which+'&safer='+username+"&todo="+todoid
                             });
                           }).catch(error => { 
                             this.showErrorToast(error);

@@ -13,13 +13,14 @@ import com.icodeview.rock.admin.service.RbacSlotService;
 import com.icodeview.rock.admin.vo.RbacSlotVo;
 import com.icodeview.rock.admin.vo.RbacTypeVo;
 import com.icodeview.rock.vo.PageResult;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Service
 public class RbacSlotServiceImpl extends ServiceImpl<RbacSlotMapper, RbacSlot> implements RbacSlotService {
     public PageResult<RbacSlotVo> getIndex(Integer belongto , Long pageNum, Long pageSize) {
         Page<RbacSlot> rbacSlotPage = new Page<>(pageNum, pageSize);

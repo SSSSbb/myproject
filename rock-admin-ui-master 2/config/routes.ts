@@ -24,6 +24,11 @@
         path: '/main/charts/index',
         component: './main/charts/index',
       },
+      {
+        // access: 'rbacRoleIndex',
+        path: '/main/notice/index',
+        component: './main/notice/index',
+      },
     ],
   },
   {
@@ -189,6 +194,10 @@
       {
         path: '/schedule/schedulelist/index',
         component: './schedule/schedulelist/index',
+      },
+      {
+        path: '/schedule/slot/index',
+        component: './schedule/slot/index',
       },
       
     ],
