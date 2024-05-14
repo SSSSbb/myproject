@@ -102,7 +102,7 @@ Page({
   takePhoto() { 
     const _this = this;
     const { belongto, username ,which,todoid,recordid} = _this.data;
-    console.log({recordid});
+    console.log({which});
     function getCurrentTime() {
       const now = new Date();
       const year = now.getFullYear();
@@ -139,26 +139,20 @@ Page({
                       filePath: res.tempFilePath,
                       encoding: 'base64',
                       success: function (res) {
-                        console.log('data:image/jpeg;base64,' + res.data);
+                        const data = res.data;
                         if(recordid!=0){
                           post("/maintain/record/update",{ id:
                             recordid,saferpic:res.data}).then((res) => {
-                            console.log({res});
                             wx.navigateTo({
-                              url: '/pages/safemaintain/safemaintain?id=' + recordid +'&which='+which+'&safer='+username+"&todo="+todoid
+                              url: '/pages/safemaintain/safemaintain?id=' + recordid +'&which='+which+'&safer='+username+"&todoid="+todoid+"&data="+data
                             });
                           }).catch(error => { 
                             this.showErrorToast(error);
                           });
                         }
                         else{
-                          post("/maintain/record/create",{ pic: res.data ,belongto:belongto,maintainer:username,eid:which}).then((res) => {
-                            console.log({res});
-                            wx.navigateTo({
-                              url: '/pages/maintain/maintain?id=' + res.data +'&eid='+ which+"&todo="+todoid
-                            });
-                          }).catch(error => { 
-                            this.showErrorToast(error);
+                          wx.navigateTo({
+                            url: '/pages/maintain/maintain?id=' + res.data +'&eid='+ which+"&todo="+todoid+"&data="+data
                           });
                         }
                       }

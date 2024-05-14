@@ -2,15 +2,14 @@
   <view class="page">
     <view class="user-card user-nav-bg">
     </view>
-    <t-cell title="{{ user.username || '点击头像登录'}}"  note="编辑" hover arrow>
+    <t-cell title="{{ user.username || '点击头像登录'}}" >
   <view bind:tap="tpLogin" class="avatar" slot="left-icon">
     <open-data type="userAvatarUrl" />
   </view>
 </t-cell>
     <t-cell title="联系电话" description="{{ user.mobile}}"  />
 <t-cell title="注册时间" description="{{ user.created_at}}"  />
-<t-cell title="所属公司" description="{{ user.belongto}}" note="查看详情" hover arrow>
-  <t-badge count="{{16}}" slot="note" />
+<t-cell title="所属公司" description="{{ enp}}" >
 </t-cell>
   </view>
 </n-page>

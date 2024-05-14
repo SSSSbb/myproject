@@ -23,11 +23,12 @@ import java.util.stream.Collectors;
 @Service
 public class RbacMaintainRecordServiceImpl extends ServiceImpl<RbacMaintainRecordMapper, RbacMaintainRecord> implements RbacMaintainRecordService {
     @Override
-    public PageResult<RbacMaintainRecordVo> getIndex(Integer eid,String work,Integer id, String maintainer, Integer belongto, Integer partsRecord, String safer, Long pageNum, Long pageSize) {
+    public PageResult<RbacMaintainRecordVo> getIndex(Integer returned,Integer eid,String work,Integer id, String maintainer, Integer belongto, Integer partsRecord, String safer, Long pageNum, Long pageSize) {
         Page<RbacMaintainRecord> rbacMaintainRecordPage = new Page<>(pageNum, pageSize);
         Page<RbacMaintainRecord> page = lambdaQuery()
                 .eq(id != null , RbacMaintainRecord::getId, id)
                 .eq(eid != null , RbacMaintainRecord::getEid, eid)
+                .eq(returned != null , RbacMaintainRecord::getReturned, returned)
                 .and(StrUtil.isNotBlank(maintainer), q -> q.like(RbacMaintainRecord::getMaintainer, "%" + maintainer + "%"))
                 .and(StrUtil.isNotBlank(work), q -> q.like(RbacMaintainRecord::getAction, "%" + work + "%"))
                 .eq(belongto != null , RbacMaintainRecord::getBelongto, belongto)
@@ -55,7 +56,9 @@ public class RbacMaintainRecordServiceImpl extends ServiceImpl<RbacMaintainRecor
         record.setProject(maintainRecordDto.getProject());
         record.setPic(maintainRecordDto.getPic());
         record.setAction(maintainRecordDto.getAction());
+        record.setReason(maintainRecordDto.getReason());
         record.setPartsRecord(maintainRecordDto.getPartsRecord());
+        record.setReturned(maintainRecordDto.getReturned());
         record.setCreatedAt(LocalDateTime.now());
         record.setUpdatedAt(LocalDateTime.now());
         record.setSaferpic(maintainRecordDto.getSaferpic());
@@ -74,8 +77,10 @@ public class RbacMaintainRecordServiceImpl extends ServiceImpl<RbacMaintainRecor
         record.setSaferpic(maintainRecordDto.getSaferpic());
         record.setMaintainer(maintainRecordDto.getMaintainer());
         record.setSafer(maintainRecordDto.getSafer());
+        record.setReason(maintainRecordDto.getReason());
         record.setBelongto(maintainRecordDto.getBelongto());
         record.setProject(maintainRecordDto.getProject());
+        record.setReturned(maintainRecordDto.getReturned());
         record.setAction(maintainRecordDto.getAction());
         record.setPartsRecord(maintainRecordDto.getPartsRecord());
         record.setUpdatedAt(LocalDateTime.now());

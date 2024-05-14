@@ -11,17 +11,15 @@ Page({
    */
   data: {
     defaultHead,
-    user: ""
+    user: "",
+    enp:'',
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    console.log(app.globalData.user);
-    this.setData({
-      user: app.globalData.user
-    })
+    
   },
 
   // 用户加载成功 ===== > 此处为监听 globalData.user.id 获取
@@ -30,6 +28,7 @@ Page({
     this.setData({
       user: app.globalData.user
     })
+
   },
 
   tpLogin() {
@@ -52,6 +51,22 @@ Page({
     this.setData({
       user: app.globalData.user
     })
+    console.log(app.globalData.user);
+    const user = app.globalData.user;
+    this.setData({
+      user: app.globalData.user
+    })
+    const belongto = user.belongto;
+    console.log({belongto});
+    get("/rbac/enterprise/index",{ id:
+      belongto}).then((res) => {
+      console.log({res});
+      this.setData({
+        enp:res.data.list[0].name,
+      })
+    }).catch(error => { 
+      this.showErrorToast(error);
+    });
   },
 
   /**

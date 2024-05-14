@@ -67,6 +67,7 @@
       <t-icon t-class="close-btn" name="close-circle" size="32" color="#fff" bind:tap="onClose" />
   </view>
 </t-popup>
+<view class="maintain">
 
   <view class="item" wx:if="{{parts.length > 0}}">
     <view class="title">零件维护记录</view>
@@ -86,6 +87,8 @@ data-item="{{item}}">
   </view>
 </view>
   </view>
+</view>
+
   <view class="container column-me">
   <view class="tips">
     请确认无误后请绘制清晰可见的签名并保存
@@ -96,6 +99,6 @@ data-item="{{item}}">
     <button type="default" class='txt' bindtap="clickSave">保存签名</button>
   </view>
 </view>
-<t-button theme="danger" size="large" block bindtap="onRetrun" >不合格 点击退回</t-button>
+<t-button theme="danger" size="large" block bindtap="onReturn" >不合格 点击退回</t-button>
 
 <t-button theme="primary" size="large" block bindtap="onSubmit">确认提交</t-button>

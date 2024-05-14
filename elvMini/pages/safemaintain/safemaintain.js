@@ -30,21 +30,61 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onSubmit(){
-    console.log(this.data.id);
+    if (!this.data.hasDraw) {
+      wx.showModal({
+        title: '提示',
+        content: '签名内容不能为空！',
+        showCancel: false
+      });
+      return false;
+    };
     const recorid = this.data.id;
     const username = this.data.safer;
     const todoid = this.data.todoid;
-     post("/maintain/record/update",{ id:recorid,safer:username}).then((res) => {
+     post("/maintain/record/update",{ id:recorid,safer:username,returned:1}).then((res) => {
       console.log({res});
-      post("/todo/update",{ id:this.data.todoid,status:1,record:this.data.id}).then((res) => {
-        console.log({res});
-        
-      }).catch(error => { 
-        this.showErrorToast(error);
-      });
+      console.log({todoid});
+      post("/todo/update", { id: todoid, status: 1, record: recorid })
+  .then((res) => {
+    console.log({ res });
+    // 提示提交成功
+    wx.showToast({
+      title: '提交成功',
+      icon: 'success',
+      duration: 4000,
+      success: function() {
+        // 用户点击确定后跳转到某个页面
+        wx.switchTab({
+          url: '/pages/home/home'  // 替换为你要跳转的页面路径
+        });
+      }
+    });
+  })
+  .catch(error => { 
+    this.showErrorToast(error);
+  });
+
     }).catch(error => { 
       this.showErrorToast(error);
     });
+  },
+  onReturn(){
+    if (!this.data.hasDraw) {
+      wx.showModal({
+        title: '提示',
+        content: '签名内容不能为空！',
+        showCancel: false
+      });
+      return false;
+    };
+    console.log(this.data.id);
+    const recordid = this.data.id;
+    console.log({recordid});
+    const username = this.data.safer;
+    const todoid = this.data.todoid;
+    wx.navigateTo({
+                url: '/pages/returned/returned?&recordid=' +recordid + '&todoid='+this.data.todoid // 替换为你要跳转的页面路径
+              });
   },
   handlePopup(e) {
     const { item } = e.currentTarget.dataset;
@@ -101,6 +141,7 @@ Page({
     const id = options.id;
     const todoid = options.todoid;
     this.setData({id});
+    console.log({todoid});
     const which = options.which;
     const safer = options.safer;
     this.setData({

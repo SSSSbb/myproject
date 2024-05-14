@@ -12,6 +12,7 @@ Page({
     scheduleTable: [[], [], [], [], []], // 初始化排班表数据
     currentUser:"",
     date:'',
+    slot:[],
   },
 
   /**
@@ -19,50 +20,7 @@ Page({
    */
   
   onLoad(options) {
-const today = new Date();
-const dayOfYear = (today - new Date(today.getFullYear(), 0, 0)) / 86400000;
-const weekNumber = Math.ceil((dayOfYear + 1) / 7);
-const date =today.getFullYear()+""+weekNumber;
-this.setData({date});
-    const { user } = app.globalData;
-    const { belongto, username } = user;
-    this.setData({ currentUser:username });
-    get("/schedule/schedulelist/index",{belongto}).then((res) => {
-      console.log({res});
-      this.setData({ schedulelist:res.data });
-      get("/rbac/user/index",{belongto}).then(({ data: { list } }) => {
-        console.log({list});
-        this.setData({ userlist:list });
-        const userIdToUsernameMap = {};
-        this.data.userlist.forEach(user => {
-                 userIdToUsernameMap[user.id] = user.username;
-        });
-             this.data.schedulelist.forEach(item => {
-               item.username = userIdToUsernameMap[item.userid]; 
 
-            });
-            const scheduletable = [[], [], [], [], []];
-            this.data.schedulelist.forEach(item => {
-              const { slot, weekday } = item;
-              const date = new Date(item.create_time);
-               const year = date.getFullYear();
-               const dayOfyear = (date - new Date(date.getFullYear(), 0, 0)) / 86400000;
-const weeknumber = Math.ceil((dayOfyear + 1) / 7);
-               const temp = year+''+weeknumber;
-               console.log({temp});
-               console.log(this.data.date);
-               if(temp==this.data.date){
-                scheduletable[slot][weekday] = item; 
-               }
-            });
-            this.setData({ scheduleTable: scheduletable });
-            console.log(this.data.scheduleTable); 
-      }).catch(error => { 
-        this.showErrorToast(error);
-      }); 
-    }).catch(error => { 
-      console.log({error});
-    }); 
   },
 
   /**
@@ -76,7 +34,61 @@ const weeknumber = Math.ceil((dayOfyear + 1) / 7);
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    const today = new Date();
+    const dayOfYear = (today - new Date(today.getFullYear(), 0, 0)) / 86400000;
+    const weekNumber = Math.ceil((dayOfYear + 1) / 7);
+    const date =today.getFullYear()+""+weekNumber;
+    this.setData({date});
+        const { user } = app.globalData;
+        const { belongto, username } = user;
+        this.setData({ currentUser:username });
+        get("/schedule/schedulelist/index",{belongto}).then((res) => {
+          console.log({res});
+          this.setData({ schedulelist:res.data });
+          get("/rbac/user/index",{belongto}).then(({ data: { list } }) => {
+            console.log({list});
+            this.setData({ userlist:list });
+            const userIdToUsernameMap = {};
+            this.data.userlist.forEach(user => {
+                     userIdToUsernameMap[user.id] = user.username;
+            });
+                 this.data.schedulelist.forEach(item => {
+                   item.username = userIdToUsernameMap[item.userid]; 
+    
+                });
+                const scheduletable = [[], [], [], [], []];
+                
+                this.data.schedulelist.forEach(item => {
+                  const { slot, weekday } = item;
+                  const date = new Date(item.create_time);
+                   const year = date.getFullYear();
+                   const dayOfyear = (date - new Date(date.getFullYear(), 0, 0)) / 86400000;
+    const weeknumber = Math.ceil((dayOfyear + 1) / 7);
+                   const temp = year+''+weeknumber;
+                  //  console.log({temp});
+                  //  console.log(this.data.date);
+                   if(temp==this.data.date){
+                    scheduletable[slot][weekday] = item; 
+                   }
+                });
+                this.setData({ scheduleTable: scheduletable });
+                console.log(this.data.scheduleTable); 
+          }).catch(error => { 
+            this.showErrorToast(error);
+          }); 
+        }).catch(error => { 
+          console.log({error});
+        }); 
+        console.log({belongto})
+        get("/schedule/slot/index",{ belongto:
+          belongto}).then((res) => {
+          console.log({res});
+          this.setData({
+            slot:res.data.list,
+          })
+        }).catch(error => { 
+          this.showErrorToast(error);
+        });
   },
 
   /**

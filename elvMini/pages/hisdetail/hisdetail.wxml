@@ -17,7 +17,6 @@
     <image class="pic" src="data:image/jpeg;base64,{{list[0].saferpic}}" ></image>
     </view>
     <view>项目编号：{{ list[0].id }}</view>
-    <view>电梯编号：{{ list[0].eid }}</view>
     <view>维修类型：{{ list[0].action === 'repair' ? '维修' : (list[0].action === 'maintain' ? '保养' : list[0].action) }}</view>
     <view>项目内容：{{ list[0].project }}</view>
     <view>创建时间：{{ list[0].created_at }}</view>
@@ -99,7 +98,7 @@ data-item="{{item}}">
   </view>
 </view>
   </view>
-<t-button theme="primary" size="large" block bindtap="navigateToAddPartsPage" wx:if="{{codeid==3}}">添加零件操作记录</t-button>
+<t-button theme="primary" size="large" block bindtap="navigateToAddPartsPage" wx:if="{{codeid==3&&list[0].returned==0}}">添加零件操作记录</t-button>
 </view>
 <t-back-top text="顶部" scroll-top="{{scrollTop}}" visibility-height="{{100}}" />
 </t-pull-down-refresh>

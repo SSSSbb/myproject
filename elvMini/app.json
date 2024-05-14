@@ -12,7 +12,8 @@
     "pages/tododetail/tododetail",
     "pages/maintain/maintain",
     "pages/addParts/addParts",
-    "pages/safemaintain/safemaintain"
+    "pages/safemaintain/safemaintain",
+    "pages/returned/returned"
   ],
   "window": {
     "navigationBarTextStyle": "black",

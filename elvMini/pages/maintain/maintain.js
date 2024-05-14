@@ -1,6 +1,7 @@
 // pages/maintain/maintain.js
 const { get } = require("../../api/api");
 const { post } = require("../../api/api");
+
 var context = null; // 使用 wx.createContext 获取绘图上下文 context
 var mCanvas = null;
 
@@ -13,13 +14,18 @@ Page({
   data: {
     id:'',
     inputContent:'',
-    which:'',
+    eid:'',
+    maintainer:'',
+    sign:'',
+    username:'',
+    belongto:'',
     hasDraw: false, //默认没有画
     todoid:'',
     style: 'border: 2rpx solid var(--td-input-border-color-example);border-radius: 12rpx;',
     cityText: '',
     action:'',
     cityValue: [],
+    data:'',
     partsrecordlist:[],
     partsprofilelist:[],
     cityTitle: '',
@@ -54,20 +60,66 @@ Page({
     this.setData({ cityVisible: true, cityTitle: '选择操作' });
   },
   onSubmit(){
-    console.log(this.data.id);
-    console.log(this.data.inputContent);
-    const action = this.data.cityValue[0];
-     post("/maintain/record/update",{ id:this.data.id,action:action,project:this.data.inputContent,safer:'0'}).then((res) => {
-      console.log({res});
-      post("/todo/update",{ id:this.data.todoid,status:1,record:this.data.id}).then((res) => {
-        console.log({res});
-        
-      }).catch(error => { 
-        this.showErrorToast(error);
+    if (!this.data.hasDraw) {
+      wx.showModal({
+        title: '提示',
+        content: '签名内容不能为空！',
+        showCancel: false
       });
-    }).catch(error => { 
-      this.showErrorToast(error);
+      return false;
+    };
+    const inputContent = this.data.inputContent;
+    const data = this.data.data;
+    const sign = this.data.sign;
+    const todoid = this.data.todoid;
+    const belongto = this.data.belongto;
+    const username = this.data.username;
+    const eid = this.data.eid;
+    const action = this.data.cityValue[0];
+    console.log({data});
+    console.log({belongto});
+    console.log({eid});
+    console.log({username});
+    console.log({action});
+    console.log({inputContent});
+    console.log({sign});
+     post("/maintain/record/create",{ pic:data,belongto:belongto,eid:eid,maintainer:username,action:action,project:inputContent,enp_sign:sign,safer:'0'}).then((res) => {
+       console.log({res});
+      // post("/todo/update",{ id:todoid,status:1,record:res.data}).then((res) => {
+      //   console.log({res});
+      //   wx.showToast({
+      //     title: '提交成功',
+      //     icon: 'success',
+      //     duration: 4000,
+      //     success: function() {
+      //       wx.switchTab({
+      //         url: '/pages/home/home'  // 替换为你要跳转的页面路径
+      //       });
+      //     }
+      //   });
+      // });
     });
+    post("/maintain/record/create",{ pic:data,belongto:belongto,enp_sign:sign,safer:'0'}).then((res) => {
+       console.log({res});
+       const id = res.data;
+       post("/maintain/record/update",{ id:id,eid:eid,maintainer:username,action:action,project:inputContent}).then((res) => {
+        console.log({res});
+        post("/todo/update",{ id:todoid,status:1,record:id}).then((res) => {
+          console.log({res});
+          wx.showToast({
+            title: '提交成功',
+            icon: 'success',
+            duration: 4000,
+            success: function() {
+              wx.switchTab({
+                url: '/pages/home/home'  // 替换为你要跳转的页面路径
+              });
+            }
+          });
+        });
+     });
+    });
+    
   },
   onInput: function (event) {
     const inputValue = event.detail.value; // 获取用户输入的内容
@@ -79,7 +131,24 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
+  showErrorToast(error) {
+    wx.showToast({
+      icon: "none",
+      title: error || "未知错误",
+    });
+  },
   onLoad(options) {
+    const data = options.data;
+    const eid = options.eid;
+    const { user } = app.globalData;
+    const { belongto, username } = user;
+    console.log({options});
+    this.setData({
+      data:data,
+      eid:eid,
+      belongto:belongto,
+      username:username,
+    });
     wx.createSelectorQuery()
     .select('#canvas') // 在 WXML 中填入的 id
     .fields({
@@ -160,19 +229,21 @@ Page({
       success: function (res) {
           // 获取临时文件路径
           const tempFilePath = res.tempFilePath;
-  
           // 使用 wx.getFileSystemManager().readFile 方法读取临时文件并转换为 base64 编码
           wx.getFileSystemManager().readFile({
               filePath: tempFilePath,
               encoding: 'base64', // 指定编码格式为 base64
               success: function (result) {
                   console.log('base64编码：', result.data);
-                  console.log({recordid});
-post("/maintain/record/update",{ id:recordid,enp_sign:result.data}).then((res) => {
-      console.log({res});
-    }).catch(error => { 
-      this.showErrorToast(error);
-    });              },
+                  that.setData({
+                    sign:result.data,
+                  })
+                  // post("/maintain/record/update",{ id:recordid,enp_sign:result.data}).then((res) => {
+                  //   console.log({res});
+                  // }).catch(error => { 
+                  //   this.showErrorToast(error);
+                  // });  
+                },
               fail: function (error) {
                   console.error('读取临时文件失败：', error);
               }

@@ -43,3 +43,108 @@
   border: 1px solid #cccccc;
   color: #333333 !important;
 }
+/* 维保记录样式 */
+.maintain-item {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.item {
+  margin-bottom: 10px;
+  color: #666;
+}
+
+.item:last-child {
+  margin-bottom: 0;
+}
+
+/* 维保员信息样式 */
+.maintain {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.username, .mobile, .role {
+  margin-bottom: 5px;
+  color: #666;
+}
+
+/* 弹出框样式 */
+.block {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 300px; /* 设置弹出框的宽度 */
+  height: 400px; /* 设置弹出框的高度 */
+}
+
+
+.part-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-top: 10px;
+}
+
+.part-detail {
+  margin-top: 10px;
+}
+
+.part-name, .part-info {
+  margin-bottom: 5px;
+  color: #666;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+body {
+  background-color: #f5f5f5; /* 页面背景色 */
+  font-family: Arial, sans-serif; /* 字体 */
+}
+
+/* 电梯信息样式 */
+.profile {
+  margin: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 阴影 */
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+/* 弹出框样式 */
+
+.profile-item {
+  margin-top: 20px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.pic {
+  width: 150px;
+  height: 150px;
+  margin-bottom: 10px;
+}
+
+.name, .device_code, .reg_code, .location, .type, .status, .last_maintain, .last_repair {
+  margin-bottom: 5px;
+  color: #666;
+}

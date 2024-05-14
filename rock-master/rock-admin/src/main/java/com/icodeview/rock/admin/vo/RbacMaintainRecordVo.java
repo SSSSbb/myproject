@@ -9,11 +9,13 @@ import java.time.LocalDateTime;
 public class RbacMaintainRecordVo {
     private Integer id;
     private Integer eid;
+    private Integer returned;
     private byte[] enpSign;
     private byte[] safeSign;
     private byte[] pic;
     private byte[] saferpic;
     private String maintainer;
+    private String reason;
     private String safer;
     private Integer belongto;
     private String project;

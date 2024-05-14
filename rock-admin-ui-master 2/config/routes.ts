@@ -181,6 +181,10 @@
         path: '/maintain/space/index',
         component: './maintain/space/index',
       },
+      {
+        path: '/maintain/returned/index',
+        component: './maintain/returned/index',
+      },
       
     ],
   },

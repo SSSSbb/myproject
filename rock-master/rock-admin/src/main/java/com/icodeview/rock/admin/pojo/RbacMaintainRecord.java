@@ -18,6 +18,8 @@ public class RbacMaintainRecord {
     private byte[] safeSign;
     private byte[] pic;
     private byte[] saferpic;
+    private Integer returned;
+    private String reason;
 
     private String maintainer;
     private String safer;

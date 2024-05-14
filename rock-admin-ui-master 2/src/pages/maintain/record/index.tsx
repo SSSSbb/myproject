@@ -25,6 +25,9 @@ const RbacTypeList: React.FC = () => {
   const [saferPic, setSaferPic] = useState<any>();
   const [maintainPic, setMaintainPic] = useState<any>();
   const [saferUrl, setSaferUrl] = useState<any>();
+  const [picUrl, setPicUrl] = useState<any>();
+  const [saferSignUrl, setSaferSignUrl] = useState<any>();
+
   const [mantainUrl, setMaintainUrl] = useState<any>();
   const [partsRecordCreateModalVisible, handlePartsRecordCreateModalVisible] = useState<boolean>(false);
   const [form] = ProForm.useForm<TableListItem>();
@@ -287,6 +290,23 @@ const RbacTypeList: React.FC = () => {
       hideInTable: true,
     },
     {
+      title: '状态',
+      dataIndex: 'returned',
+      search:false,
+      render: (text) => {
+        switch (text) {
+          case 1:
+            return '合格';
+          case 2:
+            return '已退回未处理';
+            case 3:
+            return '已退回已处理';
+          default:
+            return '未检查';
+        }
+      },
+    },
+    {
       title: '创建时间',
       search: false,
       hideInForm: true,
@@ -323,6 +343,10 @@ const RbacTypeList: React.FC = () => {
                     else setMaintainUrl(null);
                     if (record.safe_sign) setSaferUrl(`data:image/png;base64,${record.safe_sign}`);
                     else setSaferUrl(null);
+                    if (record.pic) setPicUrl(`data:image/png;base64,${record.pic}`);
+                    else setPicUrl(null);
+                    if (record.saferpic) setSaferSignUrl(`data:image/png;base64,${record.saferpic}`);
+                    else setSaferSignUrl(null);
                   }}
                 >
                   查看
@@ -332,7 +356,15 @@ const RbacTypeList: React.FC = () => {
               autoFocusFirstInput
             >
               {' '}
-              
+              <Card title="维保员打卡图片">
+              <img style={{ width: '20%' }} src={picUrl} />
+              </Card>
+              <Card title="安全员打卡图片">
+              <img style={{ width: '20%' }} src={saferSignUrl} />
+              </Card>
+
+          
+
               <Card title="操作对象电梯">
                 <ProTable    
                   options={false}

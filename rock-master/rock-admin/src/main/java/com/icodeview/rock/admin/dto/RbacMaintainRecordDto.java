@@ -19,6 +19,11 @@ public class RbacMaintainRecordDto {
     private String maintainer;
     @ApiModelProperty(value = "安全员",name = "safer",required = true)
     private String safer;
+    @ApiModelProperty(value = "是否被退回",name = "returned",required = true)
+    private Integer returned;
+
+    @ApiModelProperty(value = "退回理由",name = "reason",required = true)
+    private String reason;
 
     @ApiModelProperty(value = "打卡照片",name = "pic",required = true)
     private byte[] pic;

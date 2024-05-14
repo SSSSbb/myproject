@@ -37,6 +37,7 @@ public class RbacMaintainRecordController {
             @ApiImplicitParam(name = "safer",value = "安全员"),
             @ApiImplicitParam(name = "project",value = "项目"),
             @ApiImplicitParam(name = "work",value = "工作"),
+            @ApiImplicitParam(name = "returned",value = "是否被退回"),
             @ApiImplicitParam(name = "partsRecord",value = "相关的零件记录"),
             @ApiImplicitParam(name = "belongto",value = "属于"),
             @ApiImplicitParam(name = "current",value = "页码"),
@@ -45,6 +46,7 @@ public class RbacMaintainRecordController {
     public CommonResult<PageResult<RbacMaintainRecordVo>> index(
             @RequestParam(value = "id", required = false) Integer id,
             @RequestParam(value = "eid", required = false) Integer eid,
+            @RequestParam(value = "returned", required = false) Integer returned,
             @RequestParam(value = "maintainer", required = false) String maintainer,
             @RequestParam(value = "safer", required = false) String safer,
             @RequestParam(value = "work", required = false) String work,
@@ -53,7 +55,7 @@ public class RbacMaintainRecordController {
             @RequestParam(value = "current", required = false, defaultValue = "1") Long pageNum,
             @RequestParam(value = "pageSize", required = false, defaultValue = "20") Long pageSize
     ) {
-        PageResult<RbacMaintainRecordVo> result = rbacMaintainRecordService.getIndex(eid,work,id, maintainer,belongto,partsRecord,safer,pageNum,  pageSize);
+        PageResult<RbacMaintainRecordVo> result = rbacMaintainRecordService.getIndex(returned,eid,work,id, maintainer,belongto,partsRecord,safer,pageNum,  pageSize);
         return CommonResult.success(result);
     }
 
