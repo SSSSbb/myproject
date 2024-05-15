@@ -1,14 +1,15 @@
 import React, { useRef, useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table';
-import { Button, message, Space, Popconfirm } from 'antd';
+import { Button, message, Space, Popconfirm, Input } from 'antd';
 import type { TableListItem } from './data';
 import { PlusOutlined } from '@ant-design/icons';
 import ProForm, { ModalForm, ProFormText } from '@ant-design/pro-form';
 import { Access, useAccess } from '@@/plugin-access/access';
 import { currentUser as queryCurrentUser } from '@/services/api';
 import { addLocation, deleteLocation, queryLocation, updateLocation } from './service';
-import { Map, Marker, NavigationControl, CityListControl } from 'react-bmapgl';
+import { Map, Marker, NavigationControl, CityListControl, AutoComplete } from 'react-bmapgl';
+
 const RbacLocationList: React.FC = () => {
   const actionRef = useRef<ActionType>();
   const [form] = ProForm.useForm<TableListItem>();
@@ -18,6 +19,8 @@ const RbacLocationList: React.FC = () => {
   const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
   const [BMapVisible, handleBMaplVisible] = useState<boolean>(false);
   const access: API.UserAccessItem = useAccess();
+  const [searchResult, setSearchResult] = useState<string[]>([]);
+  const [selectedLocation, setSelectedLocation] = useState<string>('');
   const [maker, setMarker] = useState(null);
   async function handleDeleteUser(id: number) {
     const response = await deleteLocation(id);
@@ -31,6 +34,20 @@ const RbacLocationList: React.FC = () => {
       actionRef.current?.reload();
     }
   }
+  const handleSearchComplete = (result: any) => {
+    const pois = result._pois;
+    const searchResults = pois.map((poi: any) => `${poi.city} ${poi.district}`);
+    setSearchResult(searchResults);
+  };
+  const handleConfirm = (e: any) => {
+    const selectedPoi = e.item.value; // 假设 e.item.value 包含了选中地点的信息
+    console.log({e});
+   
+    setSelectedLocation(`${selectedPoi.city} ${selectedPoi.district}`);
+    console.log(`Selected location: ${selectedPoi.city} ${selectedPoi.district}`);
+    console.log(`Location details: lng=${selectedPoi.point.lng}, lat=${selectedPoi.point.lat}`);
+  }; 
+
 
   const columns: ProColumns<TableListItem>[] = [
     {
@@ -167,9 +184,11 @@ const RbacLocationList: React.FC = () => {
                 },
               ]}
             />
+               <div style={{ width: '100%', height: '400px', position: 'relative' }}>
+
             <Map
               center={{ lng: 116.402544, lat: 39.928216 }}
-              style={{ height: 500 }}
+              style={{ height: 500 ,position: 'relative' ,zIndex:'0'}}
               zoom="12"
               enableScrollWheelZoom={true}
               onClick={async (e: any) => {
@@ -181,9 +200,16 @@ const RbacLocationList: React.FC = () => {
                 console.log({ latitude });
               }}
             >
-              <CityListControl />
+              <AutoComplete
+  style={{ width: 300, position: 'absolute', top: 10, left: 10, zIndex: 1000 }}
+  onSearchComplete={handleSearchComplete}
+  onConfirm={handleConfirm}
+  />
+              {/* <CityListControl /> */}
               <Marker position={{ lng: longitude, lat: latitude }} enableDragging={true} />
             </Map>
+            </div>
+
           </ModalForm>
         )}
         {BMapVisible && (

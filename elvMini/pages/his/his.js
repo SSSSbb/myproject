@@ -9,6 +9,7 @@ Page({
   data: {
     list: [], 
     codeid:'',
+    profilelist:[],
   },
  
   /**
@@ -18,6 +19,19 @@ Page({
     const { user } = app.globalData;
     const { belongto, username } = user;
     console.log({user});
+    get("/profile/index",{belongto}).then(({ data: { list } }) => {
+      console.log({list});
+      const transformedList = list.reduce((acc, item) => {
+        acc[item.id] = item.location;
+        return acc;
+      }, {});
+      console.log(transformedList[15]);
+      this.setData({
+        profilelist:transformedList,
+      })
+    }).catch(error => { 
+      this.showErrorToast(error);
+    }); 
     get("/rbac/user/index",{username:username}).then(({ data: { list } }) => {
       const codeid = list[0].role.id;
       this.setData({codeid:codeid})

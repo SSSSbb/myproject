@@ -16,6 +16,7 @@ import { TableListItem } from './data';
 export default () => {
   const action = useRef<ActionType>();
   const [form] = ProForm.useForm<any>();
+  const [status, setStatus] = useState<any>();
   const [belongto, setBelongto] = useState<any>();
   const [data, setData] = useState<any>([]); 
   const [username, setUsername] = useState<any>();
@@ -114,13 +115,13 @@ export default () => {
         padding: 24,
       }}
     >
-      <ProFormSwitch
+      {/* <ProFormSwitch
         label="已发送/未发送"
         fieldProps={{
           checked: ghost,
           onChange: (e) => setGhost(e),
         }}
-      />
+      /> */}
       <Button type="primary" onClick={() => handleCreateModalVisible(true)}>
                 <PlusOutlined /> 新建公告
               </Button>
@@ -157,7 +158,7 @@ export default () => {
             cardActionProps: 'actions',
           },
         }}
-        headerTitle="维保进程管理"
+        headerTitle="公告管理"
         dataSource={data}
       />
       {createModalVisible && (

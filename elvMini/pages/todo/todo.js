@@ -8,6 +8,7 @@ Page({
    */
   data: {
     list: [], // 存储待办事项列表数据
+    profilelist:[],
   },
 
   /**
@@ -23,7 +24,21 @@ Page({
       this.setData({ todo: list.length });
     }).catch(error => { 
       this.showErrorToast(error);
-    });  },
+    }); 
+    get("/profile/index",{belongto}).then(({ data: { list } }) => {
+      console.log({list});
+      const transformedList = list.reduce((acc, item) => {
+        acc[item.id] = item.location;
+        return acc;
+      }, {});
+      console.log(transformedList[15]);
+      this.setData({
+        profilelist:transformedList,
+      })
+    }).catch(error => { 
+      this.showErrorToast(error);
+    }); 
+  },
  
   /**
    * 生命周期函数--监听页面初次渲染完成

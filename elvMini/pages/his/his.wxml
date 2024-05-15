@@ -7,8 +7,12 @@
       <view class="his-content">
         {{ item.action === 'repair' ? '维修' : (item.work === 'maintain' ? '保养' : item.work) }}
       </view>      
+      <view class="his-info">地点: {{ profilelist[item.eid] }}</view>
+      <view class="his-info">
+        保单状态：{{ item.returned === 1 ? '合格' : (item.returned === 2 ? '已退回未处理' : '已退回已处理') }}
+      </view> 
+      <view class="his-info">内容： {{ item.project }}</view>
       <view class="his-info">{{ item.maintainer }}创建于{{ item.created_at }}</view>
-      <view class="his-info">内容：  {{ item.project }}</view>
     </view>
   </navigator>
   </block>

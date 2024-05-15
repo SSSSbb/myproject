@@ -7,6 +7,8 @@ Page({
     styleIsolation: 'apply-shared',
   },
   data: {
+    belongto:'',
+    content: ['欢迎来到电梯维保系统'],
     profilelistData: [], // 初始化列表数据
     todo: 0,
     data: {
@@ -33,6 +35,16 @@ Page({
   onShow() {
     this.getUserInfo();
     this.getProfileList();
+    get("/main/notice/index", { belongto: this.data.belongto ,status:1}).then(({ data: { list } }) => {
+      console.log({ list });
+      const contentArray = list.map(item => item.content);
+      this.setData({
+        content: contentArray,
+      });
+    }).catch(error => { 
+      this.showErrorToast(error);
+    });
+    
   },
   onUnload() {
     this.setData({ profilelistData: [] });
@@ -41,6 +53,7 @@ Page({
     const { user } = app.globalData;
     const { belongto, username } = user;
     const status = 0 ;
+    this.setData({belongto});
     get("/todo/index",{belongto,username,status}).then(({ data: { list } }) => {
       console.log({list});
       this.setData({ todo: list.length });

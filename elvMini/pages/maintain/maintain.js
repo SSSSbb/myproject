@@ -101,10 +101,12 @@ Page({
     });
     post("/maintain/record/create",{ pic:data,belongto:belongto,enp_sign:sign,safer:'0'}).then((res) => {
        console.log({res});
-       const id = res.data;
-       post("/maintain/record/update",{ id:id,eid:eid,maintainer:username,action:action,project:inputContent}).then((res) => {
+       const record_id = res.data;
+       console.log({record_id});
+       post("/maintain/record/update",{ id:record_id,eid:eid,maintainer:username,action:action,project:inputContent}).then((res) => {
         console.log({res});
-        post("/todo/update",{ id:todoid,status:1,record:id}).then((res) => {
+        console.log({record_id});
+        post("/todo/update",{ id:todoid,status:1,record:record_id}).then((res) => {
           console.log({res});
           wx.showToast({
             title: '提交成功',

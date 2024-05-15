@@ -2,11 +2,11 @@
 <n-page>
   <t-notice-bar
   visible="{{true}}"
+  direction="vertical"
+  interval="{{3000}}"
+  content="{{content}}"
   prefixIcon="sound"
-  suffixIcon="chevron-right"
-  content="公告"
-  t-class="external-class"
-  t-class-prefix-icon="external-class-prefix-icon"
+  bind:click="click"
 ></t-notice-bar>
 <view class="container">
   <view class="todo" bindtap="navigateToTodoPage">
@@ -23,7 +23,7 @@
     <t-cell
       url="{{'/pages/profiledetail/detail?id='+item.id}}"
       title="{{item.name}}"
-      description="{{item.type}}"
+      description="{{item.type}} 地点：{{item.location}}"
       image="data:image/png;base64,{{item.pic}}"
       note="{{item.status}}"
       bordered="{{false}}"
