@@ -1,15 +1,23 @@
+import { queryLocation } from '@/pages/basic/location/service';
+import { Map } from 'react-bmapgl';
 import React, { useState, useEffect } from 'react';
 import { Card, Row, Col, Space } from 'antd';
 import { Column } from '@ant-design/charts';
 import { currentUser as queryCurrentUser } from '@/services/api';
 import { queryProfile } from '@/pages/profile/service';
 import { Pie } from '@ant-design/plots';
+import { currentUser } from '@/services/api';
+
 import { CityListControl, MapvglLayer, MapvglView, Marker } from 'react-bmapgl';
-//todo "the value is 0"
-const Page: React.FC = () => {
+const MyMap = () => {
+  // 使用useState钩子来存储markers数据
+  const [markers, setMarkers] = useState([]);
   const [locationData, setLocationData] = useState([]);
   const [typeData, setTypeData] = useState([]);
   const [statusData, setStatusData] = useState([]);
+
+  const [belongto, setBelongto] = useState<any>();
+
   function renderStatistic(containerWidth, text, style) {
     const { width: textWidth, height: textHeight } = measureTextWidth(text, style);
     const R = containerWidth / 2; // r^2 = (w / 2)^2 + (h - offsetY)^2
@@ -30,6 +38,16 @@ const Page: React.FC = () => {
       scale < 1 ? 1 : 'inherit'
     };">${text}</div>`;
   }
+
+  const fetchUser = async () => {
+    try {
+      const user = await currentUser();
+      setBelongto(user.data.belongto);
+      
+    } catch (error) {
+      console.error('Error fetching data: ', error);
+    }
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -58,6 +76,27 @@ const Page: React.FC = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    fetchUser();
+  }, []); 
+  useEffect(() => {
+    // 模拟请求数据
+    const fetchData = async () => {
+      const response = await queryLocation({belongto:belongto})
+      const data = response.data?.list;
+      console.log({data});
+      setMarkers(data);
+    };
+    fetchData();
+  }, []); 
+
+  let mapCenter = { lng: 116.404, lat: 39.915 }; // 默认中心点坐标
+
+  if (markers.length > 0) {
+    // 如果markers数组不为空，则将地图中心点设置为第一个标记的位置
+    const firstMarker = markers[0];
+    mapCenter = { lng: firstMarker.longitude, lat: firstMarker.latitude };
+  }
   const locationCount = {};
   locationData.forEach((item) => {
     const location = item.location;
@@ -143,6 +182,22 @@ const Page: React.FC = () => {
 
   return (
     <div>
+       <Map 
+        style={{height: '400px'}}
+        center={mapCenter} // 设置地图中心点为第一个标记的位置
+        zoom="11"
+        enableScrollWheelZoom
+      >
+        {
+          markers.map((item) => (
+            <Marker 
+              key={item.id} 
+              position={{lng: item.longitude, lat: item.latitude}} 
+              title={item.name} // 可选，鼠标悬停时显示的文字
+            />
+          ))
+        }
+      </Map>
       <Row gutter={16}>
      
       {/* <Map
@@ -177,10 +232,9 @@ const Page: React.FC = () => {
     </Row>
     
     </div>
-  
-    
-    
+   
+      
   );
-};
+}
 
-export default Page;
+export default MyMap;
