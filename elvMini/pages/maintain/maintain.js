@@ -72,13 +72,13 @@ Page({
     };
     const inputContent = this.data.inputContent;
     const data = this.data.data;
-    const sign = this.data.sign;
     const todoid = this.data.todoid;
     const belongto = this.data.belongto;
     const username = this.data.username;
     const eid = this.data.eid;
     const action = this.data.cityValue[0];
-    post("/maintain/record/create",{ pic:picdata,belongto:belongto,enp_sign:base,safer:'0'}).then((res) => {
+    console.log({picdata});
+    post("/maintain/record/create",{ belongto:belongto,enp_sign:base,safer:'0',pic:app.globalData.pic}).then((res) => {
        console.log({res});
        const record_id = res.data;
        console.log({record_id});
@@ -119,8 +119,8 @@ Page({
     });
   },
   onLoad(options) {
+    picdata = options.data;
     const data = options.data;
-    picdata = data;
     const eid = options.eid;
     const { user } = app.globalData;
     const { belongto, username } = user;

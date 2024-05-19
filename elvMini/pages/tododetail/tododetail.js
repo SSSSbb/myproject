@@ -141,6 +141,7 @@ Page({
                       success: function (res) {
                         const data = res.data;
                         if(recordid!=0){
+                          app.globalData.pic = res.data;
                           post("/maintain/record/update",{ id:
                             recordid,saferpic:res.data}).then((res) => {
                             wx.navigateTo({

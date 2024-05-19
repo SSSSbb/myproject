@@ -7,6 +7,7 @@ import {
 let globalData = {
   // 是否已拿到token
   token: '',
+  pic:'',
   // 用户信息
   user: {
     id: '',
