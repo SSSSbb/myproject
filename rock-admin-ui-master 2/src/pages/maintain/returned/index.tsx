@@ -126,7 +126,7 @@ export default () => {
   return (
     <PageContainer>
     <ProList<{ title: string }>
-      rowKey="title"
+      rowKey="id"
       headerTitle="被安全员退回的保单"
       toolBarRender={() => {
         return [

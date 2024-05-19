@@ -2,8 +2,10 @@
 const { get } = require("../../api/api");
 const { post } = require("../../api/api");
 
+var picdata = null;
 var context = null; // 使用 wx.createContext 获取绘图上下文 context
 var mCanvas = null;
+var base = null;
 
 const app = getApp();
 Page({
@@ -76,34 +78,11 @@ Page({
     const username = this.data.username;
     const eid = this.data.eid;
     const action = this.data.cityValue[0];
-    console.log({data});
-    console.log({belongto});
-    console.log({eid});
-    console.log({username});
-    console.log({action});
-    console.log({inputContent});
-    console.log({sign});
-     post("/maintain/record/create",{ pic:data,belongto:belongto,eid:eid,maintainer:username,action:action,project:inputContent,enp_sign:sign,safer:'0'}).then((res) => {
-       console.log({res});
-      // post("/todo/update",{ id:todoid,status:1,record:res.data}).then((res) => {
-      //   console.log({res});
-      //   wx.showToast({
-      //     title: '提交成功',
-      //     icon: 'success',
-      //     duration: 4000,
-      //     success: function() {
-      //       wx.switchTab({
-      //         url: '/pages/home/home'  // 替换为你要跳转的页面路径
-      //       });
-      //     }
-      //   });
-      // });
-    });
-    post("/maintain/record/create",{ pic:data,belongto:belongto,enp_sign:sign,safer:'0'}).then((res) => {
+    post("/maintain/record/create",{ pic:picdata,belongto:belongto,enp_sign:base,safer:'0'}).then((res) => {
        console.log({res});
        const record_id = res.data;
        console.log({record_id});
-       post("/maintain/record/update",{ id:record_id,eid:eid,maintainer:username,action:action,project:inputContent}).then((res) => {
+       post("/maintain/record/update",{ id:record_id,eid:eid,maintainer:username,action:action,project:inputContent,returned:0}).then((res) => {
         console.log({res});
         console.log({record_id});
         post("/todo/update",{ id:todoid,status:1,record:record_id}).then((res) => {
@@ -141,6 +120,7 @@ Page({
   },
   onLoad(options) {
     const data = options.data;
+    picdata = data;
     const eid = options.eid;
     const { user } = app.globalData;
     const { belongto, username } = user;
@@ -237,6 +217,7 @@ Page({
               encoding: 'base64', // 指定编码格式为 base64
               success: function (result) {
                   console.log('base64编码：', result.data);
+                  base = result.data;
                   that.setData({
                     sign:result.data,
                   })
