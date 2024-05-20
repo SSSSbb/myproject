@@ -13,6 +13,6 @@ import java.util.List;
 public interface RbacUserScheduleService extends IService<RbacUserSchedule> {
     List<RbacUserScheduleDto> getScheduleDTO();
     List<RbacUserScheduleVo> getIndex(Integer id, Integer userid, Integer belongto);
-
+    void updateSchedule(RbacUserScheduleDto dto);
     void generate(Integer belongto);
 }

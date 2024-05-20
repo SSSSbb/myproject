@@ -13,6 +13,7 @@ Page({
     currentUser:"",
     date:'',
     slot:[],
+    slotList:[],
   },
 
   /**
@@ -42,6 +43,7 @@ Page({
         const { user } = app.globalData;
         const { belongto, username } = user;
         this.setData({ currentUser:username });
+        console.log(this.data.currentUser);
         get("/schedule/schedulelist/index",{belongto}).then((res) => {
           console.log({res});
           this.setData({ schedulelist:res.data });
@@ -80,15 +82,21 @@ Page({
           console.log({error});
         }); 
         console.log({belongto})
-        get("/schedule/slot/index",{ belongto:
-          belongto}).then((res) => {
-          console.log({res});
-          this.setData({
-            slot:res.data.list,
-          })
-        }).catch(error => { 
-          this.showErrorToast(error);
-        });
+        get("/schedule/slot/index", { belongto: belongto })
+  .then((res) => {
+    console.log({ res });
+    const slotList = res.data.list.reduce((acc, curr) => {
+      acc[curr.code] = curr.slot;
+      return acc;
+    }, {});
+    console.log(slotList);
+    this.setData({slotList});
+    // 可以将 slotList 存储在状态中或者进行其他操作
+  })
+  .catch((error) => {
+    this.showErrorToast(error);
+  });
+
   },
 
   /**

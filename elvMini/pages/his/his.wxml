@@ -1,22 +1,19 @@
-<!-- todo.wxml -->
-
 <view class="his-list">
   <block wx:for="{{ list }}" wx:key="id">
     <navigator url="/pages/hisdetail/hisdetail?id={{ item.id }}&safer={{item.safer}}&eid={{item.eid}}&parts_record={{item.parts_record}}&codeid={{codeid}}">
-    <view class="his-item" >
-      <view class="his-content">
-        {{ item.action === 'repair' ? '维修' : (item.action === 'maintain' ? '保养' : item.work) }}
-      </view>      
-      <view class="his-info">地点: {{ profilelist[item.eid] }}</view>
-      <view class="his-info">
-        保单状态：{{ item.returned === 0 ? '未检查' : (item.returned === 1 ? '合格' : (item.returned === 2 ? '已退回未处理' : '已退回已处理')) }}
-
-      </view> 
-      <view class="his-info">内容： {{ item.project }}</view>
-      <view class="his-info">{{ item.maintainer }}创建于{{ item.created_at }}</view>
-    </view>
-  </navigator>
+      <view class="his-item">
+        <view class="his-content">
+          <image src="{{ item.action === 'repair' ? '/images/repair.png' : '/images/maintain.png' }}" class="his-icon" />
+          {{ item.action === 'repair' ? '维修' : (item.action === 'maintain' ? '保养' : item.work) }}
+        </view>      
+        <view class="his-info">地点: {{ profilelist[item.eid] }}</view>
+        <view class="his-info">
+          保单状态：{{ item.returned === 0 ? '未检查' : (item.returned === 1 ? '合格' : (item.returned === 2 ? '已退回未处理' : '已退回已处理')) }}
+        </view> 
+        <view class="his-info">内容： {{ item.project }}</view>
+        <view class="his-info">{{ item.maintainer }}创建于{{ item.created_at }}</view>
+      </view>
+    </navigator>
   </block>
-  <view class="button-example">
-</view>
+  <view class="button-example"></view>
 </view>

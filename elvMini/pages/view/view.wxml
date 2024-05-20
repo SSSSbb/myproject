@@ -1,23 +1,21 @@
 <div class="schedule-table-container">
   <div class="schedule-table">
     <div class="row header">
-      <div class="cell"></div> <!-- 空白表头占位 -->
-      <div class="cell">周一</div>
-      <div class="cell">周二</div>
-      <div class="cell">周三</div>
-      <div class="cell">周四</div>
-      <div class="cell">周五</div>
-      <div class="cell">周六</div>
-      <div class="cell">周日</div>
+      <div class="cell header-cell"></div> <!-- 空白表头占位 -->
+      <div class="cell header-cell">周一</div>
+      <div class="cell header-cell">周二</div>
+      <div class="cell header-cell">周三</div>
+      <div class="cell header-cell">周四</div>
+      <div class="cell header-cell">周五</div>
+      <div class="cell header-cell">周六</div>
+      <div class="cell header-cell">周日</div>
     </div>
     <!-- 使用wx:for嵌套循环遍历时段和日期 -->
-   <div wx:for="{{scheduleTable}}" wx:for-item="timeSlot" wx:key="index" class="row">
-  <div class="cell time">{{timeSlot.slot}}</div> <!-- 使用timeSlot数组中的slot字段 -->
-  <div wx:for="{{timeSlot}}" wx:for-item="item" wx:key="index" class="cell" style="{{item.username === 'username' ? 'background-color: pink' : ''}}">
-    <div class="cell-content">{{item.username}}</div>
-  </div>
-</div>
-
-
+    <div wx:for="{{scheduleTable}}" wx:for-item="timeSlot" wx:key="index" class="row">
+      <div class="cell time">{{slotList[index]}}</div> 
+      <div wx:for="{{timeSlot}}" wx:for-item="item" wx:key="index" class="cell" style="{{item.username === currentUser ? 'background-color: pink' : ''}}">
+        <div class="cell-content">{{item.username}}</div>
+      </div>
+    </div>
   </div>
 </div>

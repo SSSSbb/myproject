@@ -34,21 +34,18 @@
     "list": [
       {
         "pagePath": "pages/home/home",
-        "text": "首页",
-        "iconPath": "/images/user-d.png",
-        "selectedIconPath": "/images/user-s.png"
+        "iconPath": "/images/home-line.png",
+        "selectedIconPath": "/images/home-fill.png"
       },
       {
         "pagePath": "pages/view/view",
-        "text": "排班",
-        "iconPath": "/images/user-d.png",
-        "selectedIconPath": "/images/user-s.png"
+        "iconPath": "/images/schedule-line.png",
+        "selectedIconPath": "/images/schedule-fill.png"
       },
       {
         "pagePath": "pages/user/center/center",
-        "text": "我的",
-        "iconPath": "/images/user-d.png",
-        "selectedIconPath": "/images/user-s.png"
+        "iconPath": "/images/user-line.png",
+        "selectedIconPath": "/images/user-fill.png"
       }
     ]
   },

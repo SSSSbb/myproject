@@ -18,15 +18,15 @@ export async function querySchedule(params?: TableListParams) {
 //   });
 // }
 
-// export async function updatePreferences(payload: TableListItem) {
-//   console.log({ payload });
-//   return request(`/api/schedule/preferences/update`, {
-//     method: 'POST',
-//     data: {
-//       ...payload,
-//     },
-//   });
-// }
+export async function updateSchedule(payload: TableListItem) {
+  console.log({ payload });
+  return request(`/api/schedule/schedulelist/update`, {
+    method: 'POST',
+    data: {
+      ...payload,
+    },
+  });
+}
 
 // export async function deletePreferences(id: number) {
 //   return request(`/api/schedule/preferences/delete`, {

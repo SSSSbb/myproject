@@ -17,6 +17,8 @@ import com.icodeview.rock.admin.vo.RbacUserScheduleVo;
 import com.icodeview.rock.vo.PageResult;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
@@ -59,7 +61,14 @@ public class RbacUserScheduleServiceImpl extends ServiceImpl<RbacUserScheduleMap
                 .collect(Collectors.toList());
     }
 
-
+    @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public void updateSchedule(RbacUserScheduleDto dto){
+        RbacUserSchedule schedule = BeanUtil.copyProperties(dto,RbacUserSchedule.class);
+        schedule.setId(dto.getId());
+        schedule.setUserid(dto.getUserid());
+        updateById(schedule);
+    }
     @Override
     public void generate(Integer belongto) {
         List<RbacUserPreferences> userList = preferencesService.list();

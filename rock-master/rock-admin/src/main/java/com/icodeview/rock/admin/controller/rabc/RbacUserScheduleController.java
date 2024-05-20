@@ -3,6 +3,7 @@ package com.icodeview.rock.admin.controller.rabc;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.github.xiaoymin.knife4j.annotations.ApiSort;
 import com.icodeview.rock.admin.common.Result;
+import com.icodeview.rock.admin.dto.RbacTodoDto;
 import com.icodeview.rock.admin.dto.RbacUserScheduleDto;
 import com.icodeview.rock.admin.pojo.RbacUser;
 import com.icodeview.rock.admin.pojo.RbacUserSchedule;
@@ -15,10 +16,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
@@ -57,5 +56,11 @@ public class RbacUserScheduleController {
         List<RbacUserScheduleVo> result = scheduleService.getIndex(id,userid,belongto);
         return CommonResult.success(result);
     }
-
+    @ApiOperationSupport(order = 3, author = "刘紫璇")
+    @ApiOperation("更新")
+    @PostMapping("update")
+    public CommonResult<Void> update(@RequestBody @Validated RbacUserScheduleDto dto) {
+        scheduleService.updateSchedule(dto);
+        return CommonResult.success("编辑成功！");
+    }
 }

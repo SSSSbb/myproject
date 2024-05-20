@@ -1,12 +1,9 @@
 export type TableListItem = {
   id: number;
-  username: string;
-  which: number;
-  status: number;
-  createby:string;
-  content:string;
+  userid: string;
+  no_work_day: number;
+  no_more_than_time: number;
   created_at?: string;
-  finish_at?: string;
   belongto?: number;
 };
 
@@ -30,10 +27,9 @@ export type TableListData = {
 
 export type TableListParams = {
   id: number;
-  username: string;
-  which: number;
-  status: number;
-  createby:string;
+  userid: string;
+  no_work_day: number;
+  no_more_than_time: number;
   belongto?: number;
   created_at?: string;
   filter?: Record<string, any[]>;

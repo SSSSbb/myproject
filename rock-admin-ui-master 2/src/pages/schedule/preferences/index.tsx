@@ -11,6 +11,7 @@ import { queryUser } from '@/pages/rbac/user/service';
 import { querySchedule } from '../schedulelist/service';
 
 import moment from 'moment';
+import { PlusOutlined } from '@ant-design/icons';
 
 const RbacTypeList: React.FC = () => {
   const actionRef = useRef<ActionType>();
@@ -18,6 +19,7 @@ const RbacTypeList: React.FC = () => {
   const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
   const access: API.UserAccessItem = useAccess();
   const [belongto, setBelongto] = useState<any>();
+  const [createModalVisible, handleCreateModalVisible] = useState<boolean>(false);
   async function handleDeleteUser(id: number) {
     console.log({ id });
     const response = await deletePreferences(id);
@@ -151,9 +153,12 @@ const RbacTypeList: React.FC = () => {
           search={false}
           columns={columns}
           toolBarRender={() => [
-              <Button type="primary" onClick={() =>{handleGenerate(belongto)}}>
+              <Button type="ghost" onClick={() =>{handleGenerate(belongto)}}>
                  生成排班表
-              </Button>
+              </Button>,
+               <Button type="primary" onClick={() => handleCreateModalVisible(true)}>
+               <PlusOutlined /> 新建
+             </Button>
           ]}
           request={async (params = {}) => {
             const rsp = await queryCurrentUser();
@@ -180,6 +185,91 @@ response.data.list.forEach(item => {
             };
           }}
         />
+        {createModalVisible && (
+        <ModalForm
+          title="添加"
+          width="450px"
+          isKeyPressSubmit={true}
+          visible={createModalVisible}
+          onVisibleChange={handleCreateModalVisible}
+          modalProps={{
+            centered: true,
+          }}
+          onFinish={async (value) => {
+           value.belongto = belongto;
+            console.log({ value });
+            const response = await addPreferences(value as TableListItem);
+            const { code, msg } = response;
+            if (code !== 200) {
+              message.error(msg);
+              return;
+            }
+            message.success(msg);
+            handleCreateModalVisible(false);
+            if (actionRef.current) {
+              actionRef.current.reload();
+            }
+           
+          }}
+        >
+          <ProFormText
+            name={'userid'}
+            label={'员工'}
+            width="md"
+            placeholder={'请选择员工'}
+            rules={[
+              {
+                required: true,
+                message: '请选择员工',
+              },
+            ]}
+            request={async () => {
+              const response = await await queryUser({
+                belongto: belongto,
+              });
+              console.log({ response });
+              return response.data!.list!.map((item: { username: any; id: any }) => {
+                return {
+                  label: item.username,
+                  value: item.id,
+                };
+              });
+            }}
+          />
+          <ProFormText
+            name={'no_more_than_time'}
+            label={'一周最多工时'}
+            width="md"
+            placeholder={'请输入一周最多工时'}
+            rules={[
+              {
+                required: true,
+                message: '请输入一周最多工时',
+              },
+            ]}
+          />
+          <ProFormSelect
+  name="no_work_day"
+  label={'周几休息'}
+  placeholder={'请选择周几休息'}
+  rules={[
+    {
+      required: true,
+      message: '请选择周几休息',
+    },
+  ]}
+  options={[
+    { label: '星期一', value: '1' },
+    { label: '星期二', value: '2' },
+    { label: '星期三', value: '3' },
+    { label: '星期四', value: '4' },
+    { label: '星期五', value: '5' },
+    { label: '星期六', value: '6' },
+    { label: '星期日', value: '7' },
+  ]}
+/>
+        </ModalForm>
+      )}
         {updateModalVisible && (
           <ModalForm<TableListItem>
             title="编辑"
