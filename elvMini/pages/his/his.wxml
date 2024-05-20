@@ -5,7 +5,7 @@
     <navigator url="/pages/hisdetail/hisdetail?id={{ item.id }}&safer={{item.safer}}&eid={{item.eid}}&parts_record={{item.parts_record}}&codeid={{codeid}}">
     <view class="his-item" >
       <view class="his-content">
-        {{ item.action === 'repair' ? '维修' : (item.work === 'maintain' ? '保养' : item.work) }}
+        {{ item.action === 'repair' ? '维修' : (item.action === 'maintain' ? '保养' : item.work) }}
       </view>      
       <view class="his-info">地点: {{ profilelist[item.eid] }}</view>
       <view class="his-info">

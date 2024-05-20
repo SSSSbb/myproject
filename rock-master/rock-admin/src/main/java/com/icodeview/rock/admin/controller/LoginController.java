@@ -34,6 +34,7 @@ public class LoginController {
         System.out.println(dto);
         try {
             LoginVo result = jwtAuthService.login(dto.getUsername(), dto.getPassword());
+            System.out.println(result);
             return CommonResult.success("登录成功！",result);
         } catch (JsonProcessingException | JOSEException e) {
             e.printStackTrace();

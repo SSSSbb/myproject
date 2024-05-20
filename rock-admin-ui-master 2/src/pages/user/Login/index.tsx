@@ -54,7 +54,8 @@ const Login: React.FC = () => {
         message.success('登录成功！');
         store.set('token', response.data!.token);
         await fetchUserInfo();
-        goto(response.data!.url!);
+        goto("/main/charts/index");
+        console.log(response.data!.url!)
         return;
       } // 如果失败去设置用户错误信息
       setUserLoginState(response);
@@ -74,7 +75,7 @@ const Login: React.FC = () => {
           <div className={styles.header}>
             <Link to="/">
               <img alt="logo" className={styles.logo} src="/elv.jpg" />
-              <span className={styles.title}>电梯维保系统</span>
+              <span className={styles.title}>电梯维保系统管理端</span>
             </Link>
           </div>
           <div className={styles.desc}>计算机203--刘紫璇</div>
@@ -105,7 +106,7 @@ const Login: React.FC = () => {
           >
             <Tabs activeKey={type} onChange={setType}>
               <Tabs.TabPane key="account" tab="账户密码登录" />
-              <Tabs.TabPane key="mobile" tab="手机号登录" />
+              {/* <Tabs.TabPane key="mobile" tab="手机号登录" /> */}
             </Tabs>
 
             {code && code !== 200 && type === 'account' && (
@@ -207,7 +208,7 @@ const Login: React.FC = () => {
                 marginBottom: 24,
               }}
             >
-              <ProFormCheckbox noStyle name="autoLogin">
+              {/* <ProFormCheckbox noStyle name="autoLogin">
                 自动登录
               </ProFormCheckbox>
               <a
@@ -216,7 +217,7 @@ const Login: React.FC = () => {
                 }}
               >
                 忘记密码 ?
-              </a>
+              </a> */}
             </div>
           </ProForm>
           {/* <Space className={styles.other}>

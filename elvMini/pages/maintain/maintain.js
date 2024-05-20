@@ -33,7 +33,7 @@ Page({
     cityTitle: '',
     citys: [
       { label: '维修', value: 'repair' },
-      { label: '维保', value: 'maintain' },
+      { label: '保养', value: 'maintain' },
     ],
   },
 
@@ -78,7 +78,9 @@ Page({
     const eid = this.data.eid;
     const action = this.data.cityValue[0];
     console.log({picdata});
-    post("/maintain/record/create",{ belongto:belongto,enp_sign:base,safer:'0',pic:app.globalData.pic}).then((res) => {
+    const maintainpic = app.globalData.pic;
+    console.log({maintainpic});
+    post("/maintain/record/create",{ belongto:belongto,enp_sign:base,safer:'0',pic:maintainpic}).then((res) => {
        console.log({res});
        const record_id = res.data;
        console.log({record_id});

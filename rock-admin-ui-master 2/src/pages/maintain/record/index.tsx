@@ -356,15 +356,53 @@ const RbacTypeList: React.FC = () => {
               autoFocusFirstInput
             >
               {' '}
-              <Card title="维保员打卡图片">
-              <img style={{ width: '20%' }} src={picUrl} />
-              </Card>
-              <Card title="安全员打卡图片">
-              <img style={{ width: '20%' }} src={saferSignUrl} />
-              </Card>
+              <Card title="维保单详细信息">
+              <Table
+                  style={{ width: '100%' }}
+                  bordered
+                  size="small"
+                  pagination={false}
+                  dataSource={[record]}
+                >
+                <Table.Column
+    title="维保员打卡图片"
+    width={200}
+    render={() => <img style={{ width: '100%' }} src={picUrl} />}
+  />
+  <Table.Column
+    title="安全员打卡图片"
+    width={200}
+    render={() => <img style={{ width: '100%' }} src={saferSignUrl} />}
+  />
+    />                  <Table.Column title="详细操作内容" dataIndex="project" key="project" width={200} />
 
-          
+<Table.Column
+    title="状态"
+    dataIndex="returned"
+    key="returned"
+    width={200}
+    render={(returned) => {
+      let statusText = '';
+      switch (returned) {
+        case 0:
+          statusText = '未检查';
+          break;
+        case 1:
+          statusText = '合格';
+          break;
+        case 2:
+          statusText = '已退回未处理';
+          break;
+        default:
+          statusText = '已退回已处理';
+          break;
+      }
+      return <span>{statusText}</span>;
+    }}
+  />                  <Table.Column title="退回理由" dataIndex="reason" key="reason" width={200} />
 
+                </Table>
+      </Card>                       
               <Card title="操作对象电梯">
                 <ProTable    
                   options={false}

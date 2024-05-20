@@ -66,36 +66,6 @@ const RbacEnterpriseList: React.FC = () => {
       actionRef.current?.reload();
     }
   }
-  const compressImage = (base64WithoutPrefix: string, compressionQuality: number) => {
-    return new Promise<string>((resolve, reject) => {
-      const image = new Image();
-      image.src = `data:image/png;base64,${base64WithoutPrefix}`;
-
-      image.onload = () => {
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d')!;
-
-        canvas.width = image.width * 0.5;
-        canvas.height = image.height * 0.5;
-
-        context.drawImage(image, 0, 0, canvas.width, canvas.height);
-
-        const compressedBase64 = canvas.toDataURL('image/jpeg', compressionQuality);
-
-        const matchResult = compressedBase64.match(/^data:image\/\w+;base64,(.*)$/);
-
-        if (matchResult && matchResult.length === 2) {
-          resolve(matchResult[1]);
-        } else {
-          reject(new Error('Failed to extract image data from base64 string.'));
-        }
-      };
-
-      image.onerror = (error) => {
-        reject(error);
-      };
-    });
-  };
 
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewFileVisible, setPreviewFileVisible] = useState(false);
@@ -137,13 +107,13 @@ const RbacEnterpriseList: React.FC = () => {
 
   async function beforeUpload(file: any) {
     const blob1 = await fileToBase64(file);
-    const compressionQuality = 0.5;
+    // const compressionQuality = 0.5;
 
-    // 调用压缩方法
-    const blob = await compressImage(blob1, compressionQuality);
+    // // 调用压缩方法
+    // const blob = await compressImage(blob1, compressionQuality);
 
-    setBlob(blob);
-    console.log({ blob });
+    setBlob(blob1);
+    console.log({ blob1 });
     setPicUrl(`data:image/png;base64,${blob1}`);
   }
   const columns_user: ProColumns[] = [
@@ -899,8 +869,9 @@ const RbacEnterpriseList: React.FC = () => {
               message.error('有未填字段！');
               return false;
             }
-            value.pic = blob[blob];
-            value.doc = fileBlob;
+            if(blob.blob) value.pic = blob.blob;
+            else value.pic = blob;
+            if(fileBlob) value.doc = fileBlob;
             console.log({ value });
             const payload: TableListItem = {
               ...value,

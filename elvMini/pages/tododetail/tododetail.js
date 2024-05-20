@@ -14,6 +14,7 @@ Page({
     recordid:'',
     todoid:'',
     belongto:0,
+    'picdata':app.globalData,
     username:'',
     which:0,
     canvasWidth: 300, // 默认宽度
@@ -100,6 +101,7 @@ Page({
     return promise;
   },
   takePhoto() { 
+    var that = this;
     const _this = this;
     const { belongto, username ,which,todoid,recordid} = _this.data;
     console.log({which});
@@ -140,8 +142,7 @@ Page({
                       encoding: 'base64',
                       success: function (res) {
                         const data = res.data;
-                        if(recordid!=0){
-                          app.globalData.pic = res.data;
+                        if(recordid!=0){                         
                           post("/maintain/record/update",{ id:
                             recordid,saferpic:res.data}).then((res) => {
                             wx.navigateTo({
@@ -152,6 +153,8 @@ Page({
                           });
                         }
                         else{
+                          app.globalData.pic = res.data;
+                          console.log(app.globalData);
                           wx.navigateTo({
                             url: '/pages/maintain/maintain?id=' + res.data +'&eid='+ which+"&todo="+todoid+"&data="+data
                           });
