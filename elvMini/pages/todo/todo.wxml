@@ -1,14 +1,19 @@
-<!-- todo.wxml -->
-
 <view class="todo-list">
-  <block wx:for="{{ list }}" wx:key="id" >
+  <block wx:for="{{ list }}" wx:key="id">
     <navigator url="/pages/tododetail/tododetail?id={{ item.id }}&username={{ item.username }}&which={{ item.which}}&recordid={{item.record}}">
-    <view class="todo-item">
-      <view class="todo-content">{{ item.content }}</view>
-      <view class="todo-content">地点：{{ profilelist[item.which] }}</view>
-      <view class="todo-info">{{ item.createby }}创建于{{ item.created_at }}</view>
-      <view class="todo-status">{{ getStatusText(item.status) }}</view>
-    </view>
-  </navigator>
+      <view class="todo-item">
+        <view class="todo-content">
+          <image src="{{ '/images/todo.png' }}" class="todo-icon" />
+          {{ item.content }}
+        </view>
+        <view class="todo-info">
+          地点：{{ profilelist[item.which] }}
+        </view>
+        <view class="todo-info">
+          目标电梯：{{ namelist[item.which] }}
+        </view>
+       
+      </view>
+    </navigator>
   </block>
 </view>

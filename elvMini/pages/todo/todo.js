@@ -9,6 +9,7 @@ Page({
   data: {
     list: [], // 存储待办事项列表数据
     profilelist:[],
+    namelist:[],
   },
 
   /**
@@ -31,9 +32,13 @@ Page({
         acc[item.id] = item.location;
         return acc;
       }, {});
-      console.log(transformedList[15]);
+      const transformed2List = list.reduce((acc, item) => {
+        acc[item.id] = item.name;
+        return acc;
+      }, {});
       this.setData({
         profilelist:transformedList,
+        namelist:transformed2List,
       })
     }).catch(error => { 
       this.showErrorToast(error);
