@@ -266,6 +266,10 @@ const RbacTypeList: React.FC = () => {
       },
     },
     {
+      title: '目标电梯id',
+      dataIndex: 'eid',
+    },
+    {
       title: '工作内容',
       dataIndex: 'action',
       valueEnum: options.reduce((acc, { value, label }) => {
@@ -665,7 +669,7 @@ const RbacTypeList: React.FC = () => {
               <div>{<PlusOutlined />}</div>
             </Upload>
           </ProForm.Item>
-          <ProForm.Item label="使用单位签名" valuePropName="defaultFileList" required>
+          <ProForm.Item label="维保员签名" valuePropName="defaultFileList" required>
             <Upload name="enp_sign" listType="picture-card" beforeUpload={beforeUploadEnp}>
               <div>{<PlusOutlined />}</div>
             </Upload>

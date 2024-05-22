@@ -189,7 +189,7 @@ const RbacManList: React.FC = () => {
         )}
         {updateModalVisible && (
           <ModalForm<TableListItem>
-            title="编辑用户"
+            title="编辑"
             width="450px"
             form={form}
             isKeyPressSubmit={true}

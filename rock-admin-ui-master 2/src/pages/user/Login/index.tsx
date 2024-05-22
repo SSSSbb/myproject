@@ -5,6 +5,7 @@ import ProForm, { ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-desi
 import { history, Link, useModel } from 'umi';
 import Footer from '@/components/Footer';
 import { getFakeCaptcha, loginByAccount } from './service';
+import { currentUser as queryCurrentUser } from '@/services/api';
 
 import store from 'store';
 
@@ -54,8 +55,9 @@ const Login: React.FC = () => {
         message.success('登录成功！');
         store.set('token', response.data!.token);
         await fetchUserInfo();
-        goto("/main/charts/index");
-        console.log(response.data!.url!)
+        const rsp = await queryCurrentUser();
+        console.log({rsp});
+        goto("/rbac/user/index");
         return;
       } // 如果失败去设置用户错误信息
       setUserLoginState(response);
