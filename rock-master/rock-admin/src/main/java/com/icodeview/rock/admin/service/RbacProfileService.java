@@ -12,5 +12,6 @@ public interface RbacProfileService  extends IService<RbacProfile> {
     Integer createProfile(RbacProfileDto profileDto);
     void deleteProfile(Integer id);
     void updateProfile(RbacProfileDto profileDto);
+    void maintainprofile(RbacProfileDto profileDto);
 
 }

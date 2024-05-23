@@ -413,12 +413,7 @@ const RbacEnterpriseList: React.FC = () => {
                     key="last_maintain"
                     width={200}
                   />
-                  <Table.Column
-                    title="上次维修时间"
-                    dataIndex="last_repair"
-                    key="last_repair"
-                    width={200}
-                  />
+                  
                   <Table.Column title="启动时间" dataIndex="start_at" key="start_at" width={200} />
                   <Table.Column title="负责人" dataIndex="user" key="user" width={200} />
                 </Table>

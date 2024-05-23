@@ -47,15 +47,18 @@ Page({
       post("/todo/update", { id: todoid, status: 1, record: recorid })
   .then((res) => {
     console.log({ res });
-    // 提示提交成功
+    const eid = this.data.which;
+    console.log({eid});
+    post("/profile/maintain",{id:eid}).then((res) => {
+      console.log({res});
+    })
     wx.showToast({
       title: '提交成功',
       icon: 'success',
       duration: 4000,
       success: function() {
-        // 用户点击确定后跳转到某个页面
         wx.switchTab({
-          url: '/pages/home/home'  // 替换为你要跳转的页面路径
+          url: '/pages/home/home' 
         });
       }
     });
@@ -143,9 +146,11 @@ Page({
     this.setData({id});
     console.log({todoid});
     const which = options.which;
+    console.log({which});
     const safer = options.safer;
     this.setData({
       safer:safer,
+      which,
       id:id,
       todoid:todoid,
     })

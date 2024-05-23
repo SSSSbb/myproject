@@ -109,4 +109,12 @@ public class RbacProfileServiceImpl extends ServiceImpl<RbacProfileMapper, RbacP
         profile.setUpdatedAt(LocalDateTime.now());
         updateById(profile);
     }
+    @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public void maintainprofile(RbacProfileDto profilenDto) {
+        RbacProfile profile = BeanUtil.copyProperties(profilenDto, RbacProfile.class);
+        profile.setId(profilenDto.getId());
+        profile.setLastMaintain(LocalDateTime.now());
+        updateById(profile);
+    }
 }

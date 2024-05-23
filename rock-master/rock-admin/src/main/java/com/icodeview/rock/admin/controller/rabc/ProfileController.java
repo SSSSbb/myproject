@@ -91,4 +91,11 @@ public class ProfileController {
         rbacProfileService.updateProfile(dto);
         return CommonResult.success("编辑成功！");
     }
+    @ApiOperationSupport(order = 3, author = "刘紫璇")
+    @ApiOperation("维保")
+    @PostMapping("maintain")
+    public CommonResult<Void> maintain(@RequestBody @Validated RbacProfileDto dto) {
+        rbacProfileService.maintainprofile(dto);
+        return CommonResult.success("编辑成功！");
+    }
 }

@@ -71,9 +71,6 @@ public class RbacMaintainRecordController {
     @ApiOperation("添加")
     @PostMapping("create")
     public CommonResult<Integer> create(@RequestBody @Validated RbacMaintainRecordDto dto) {
-        System.out.println("11111111111");
-        System.out.println(Arrays.toString(dto.getPic()));
-        System.out.println("11111111111");
         Integer id = rbacMaintainRecordService.createMaintainRecord(dto);
         return CommonResult.success("添加成功！",id);
     }

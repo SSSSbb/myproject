@@ -8,6 +8,7 @@ declare namespace API {
     id: number;
     username?: string;
     avatar?: string;
+    belongto:number;
     mobile: string;
     access?: UserAccessItem;
   };

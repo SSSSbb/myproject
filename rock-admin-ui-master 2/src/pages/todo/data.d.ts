@@ -1,5 +1,5 @@
 export type TableListItem = {
-  id: number;
+  id?: number;
   username: string;
   which: number;
   status: number;

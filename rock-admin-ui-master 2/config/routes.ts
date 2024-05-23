@@ -29,6 +29,11 @@
         path: '/main/notice/index',
         component: './main/notice/index',
       },
+      {
+        // access: 'rbacRoleIndex',
+        path: '/main/tomaintain/index',
+        component: './main/tomaintain/index',
+      },
     ],
   },
   {
