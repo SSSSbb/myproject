@@ -18,6 +18,12 @@
     <view class="history-content">历史记录</view>
   </view>
 </view>
+<block wx:if="{{ profilelistData.length === 0 }}">
+    <view class="empty-container">
+      <image src="/images/empty.png" class="empty-image" />
+    </view>
+  </block>
+  <block wx:else>
 <block wx:for="{{profilelistData}}" wx:key="index" wx:for-item="item" wx:for-index="idx">
   <view class="tr">
     <t-cell
@@ -31,7 +37,7 @@
     />
   </view>
 </block>
-
+</block>
 
 
 </n-page>

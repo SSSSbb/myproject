@@ -48,4 +48,14 @@
   border-radius: 50%;
   overflow: hidden;
 }
+.empty-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Adjust as needed */
+}
 
+.empty-image {
+  width: 100px; /* Adjust size as needed */
+  height: 100px; /* Adjust size as needed */
+}

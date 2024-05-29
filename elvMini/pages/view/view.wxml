@@ -1,3 +1,9 @@
+<block wx:if="{{ scheduleTable[0].length === 0 }}">
+    <view class="empty-container">
+      <image src="/images/rest.png" class="empty-image" />
+    </view>
+  </block>
+  <block wx:else>
 <div class="schedule-table-container">
   <div class="schedule-table">
     <div class="row header">
@@ -19,3 +25,4 @@
     </div>
   </div>
 </div>
+</block>

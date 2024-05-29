@@ -156,8 +156,11 @@ public class RbacUserServiceImpl extends ServiceImpl<RbacUserMapper, RbacUser>
     public String getHomeUrl(Integer userId) {
         List<Integer> roleIds = rbacUserRoleService.getRoleIdByUserId(userId);
         List<String> permission = rbacRolePermissionService.getPermissionByRoleIds(roleIds);
+        System.out.println(roleIds.get(0));
         Optional<String> homeUrlOptional = permission.stream().filter(url -> url.contains("index")).findFirst();
-        return homeUrlOptional.orElse("/");
+        if(roleIds.get(0)==1){
+            return "/rbac/user/index";
+        }else return "/main/charts/index";
     }
 
 

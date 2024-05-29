@@ -115,9 +115,9 @@ const RbacUserList: React.FC = () => {
             >
               编辑
             </a>
-            <Popconfirm title={'确认删除？'} onConfirm={() => handleDeleteUser(record.id!)}>
+            {/* <Popconfirm title={'确认删除？'} onConfirm={() => handleDeleteUser(record.id!)}>
               <a>删除</a>
-            </Popconfirm>
+            </Popconfirm> */}
           </Space>
         );
       },
@@ -192,6 +192,7 @@ const RbacUserList: React.FC = () => {
                   message: '请输入用户名',
                 },
               ]}
+              
             />
             <ProFormText
               name={'mobile'}
@@ -279,6 +280,7 @@ const RbacUserList: React.FC = () => {
                   message: '请输入用户名',
                 },
               ]}
+              disabled
             />
             <ProFormText
               initialValue={row.mobile}
@@ -320,6 +322,7 @@ const RbacUserList: React.FC = () => {
                     };
                   });
               }}
+              disabled
             />
           </ModalForm>
         )}

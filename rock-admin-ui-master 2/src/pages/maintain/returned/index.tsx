@@ -155,7 +155,14 @@ export default () => {
           centered: true,
         }}
         onFinish={async (value) => {  
-          console.log({value});        
+          console.log({value});  
+          const userresponse = await queryUser({username:value.username});
+              console.log({userresponse});
+
+              if(userresponse.data.list[0].role.id!=3){
+                message.error("角色选择错误，请选择维保员");
+                return;
+              }      
           const response = await addTodo({status:0,which:value.eid,username:value.username,content:value.content,createby:username,belongto:belongto});
           const r2 = await updateMaintainRecord({id:recordid,returned:3})
           const { code, msg } = response;

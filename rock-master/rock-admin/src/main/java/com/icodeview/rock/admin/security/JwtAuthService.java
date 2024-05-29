@@ -50,6 +50,7 @@ public class JwtAuthService {
         LoginVo result = new LoginVo();
         result.setToken(token);
         String url = rbacUserService.getHomeUrl(rbacUser.getId());
+        System.out.println(url);
         result.setUrl(url);
         return result;
     }

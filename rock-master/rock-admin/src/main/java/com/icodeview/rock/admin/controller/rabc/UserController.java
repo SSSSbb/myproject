@@ -67,13 +67,10 @@ public class UserController {
     public CommonResult<RbacUser> create(@RequestBody @Validated RbacUserDto dto) {
         RbacUser newUser = rbacUserService.createUser(dto);
         UserPreferencesDto pdto = new UserPreferencesDto();
-        System.out.println("3");
         pdto.setBelongto(newUser.getBelongto());
         pdto.setUserid(Long.valueOf(newUser.getId()));
         pdto.setNoWorkDay(7);
         pdto.setNoMoreThanTime(30);
-        System.out.println(pdto);
-        System.out.println("2");
         preferencesService.createPreferences(pdto);
         return CommonResult.success("添加成功！", newUser);
     }

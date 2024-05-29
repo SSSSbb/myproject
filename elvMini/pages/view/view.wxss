@@ -53,3 +53,14 @@
   overflow: hidden; /* 隐藏溢出文本 */
   text-overflow: ellipsis; /* 添加省略号表示溢出文本 */
 }
+.empty-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Adjust as needed */
+}
+
+.empty-image {
+  width: 100px; /* Adjust size as needed */
+  height: 100px; /* Adjust size as needed */
+}

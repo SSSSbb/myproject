@@ -57,7 +57,7 @@ const Login: React.FC = () => {
         await fetchUserInfo();
         const rsp = await queryCurrentUser();
         console.log({rsp});
-        goto("/rbac/user/index");
+        goto(response.data!.url!);
         return;
       } // 如果失败去设置用户错误信息
       setUserLoginState(response);

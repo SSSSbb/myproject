@@ -133,7 +133,13 @@ export default () => {
             }}
             onFinish={async (value: any) => {
               console.log(value);
-              
+              const userresponse = await queryUser({username:value.username});
+              console.log({userresponse});
+
+              if(userresponse.data.list[0].role.id!=4){
+                message.error("角色选择错误，请选择安全员");
+                return;
+              }
               const response = await addTodo({
                 username:value.username,
                 which:value.eid,

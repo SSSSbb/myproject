@@ -59,7 +59,6 @@ Page({
     
                 });
                 const scheduletable = [[], [], [], [], []];
-                
                 this.data.schedulelist.forEach(item => {
                   const { slot, weekday } = item;
                   const date = new Date(item.create_time);
@@ -67,8 +66,6 @@ Page({
                    const dayOfyear = (date - new Date(date.getFullYear(), 0, 0)) / 86400000;
     const weeknumber = Math.ceil((dayOfyear + 1) / 7);
                    const temp = year+''+weeknumber;
-                  //  console.log({temp});
-                  //  console.log(this.data.date);
                    if(temp==this.data.date){
                     scheduletable[slot][weekday] = item; 
                    }
@@ -81,17 +78,13 @@ Page({
         }).catch(error => { 
           console.log({error});
         }); 
-        console.log({belongto})
         get("/schedule/slot/index", { belongto: belongto })
   .then((res) => {
-    console.log({ res });
     const slotList = res.data.list.reduce((acc, curr) => {
       acc[curr.code] = curr.slot;
       return acc;
     }, {});
-    console.log(slotList);
     this.setData({slotList});
-    // 可以将 slotList 存储在状态中或者进行其他操作
   })
   .catch((error) => {
     this.showErrorToast(error);
