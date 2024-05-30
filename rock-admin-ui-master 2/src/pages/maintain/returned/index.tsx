@@ -13,6 +13,7 @@ export default () => {
   const [expandedRowKeys, setExpandedRowKeys] = useState<readonly Key[]>([]);
   const [belongto, setBelongto] = useState<any>();
   const [recordid, setRecordid] = useState<any>();
+  const [eid, setEid] = useState<any>();
   const [username, setUsername] = useState<any>();
   const actionRef = useRef<ActionType>();
   const [createModalVisible, handleCreateModalVisible] = useState<boolean>(false);
@@ -96,6 +97,7 @@ export default () => {
         actions: <a key="invite" onClick={() => {
           form.setFieldsValue(item);
           setRecordid(item.id);
+          setEid(item.eid);
           handleCreateModalVisible(true);}} >通知维保员</a>,
       }));
       setDataSource(newData);
@@ -148,7 +150,7 @@ if(belongto){
     />
     {createModalVisible && (
       <ModalForm
-        title="添加"
+        title="处理被退回保单"
         width="450px"
         visible={createModalVisible}
         isKeyPressSubmit={true}
@@ -165,7 +167,7 @@ if(belongto){
                 message.error("角色选择错误，请选择维保员");
                 return;
               }      
-          const response = await addTodo({status:0,which:value.eid,username:value.username,content:value.content,createby:username,belongto:belongto});
+          const response = await addTodo({status:0,which:eid,username:value.username,content:value.content,createby:username,belongto:belongto});
           const r2 = await updateMaintainRecord({id:recordid,returned:3})
           const { code, msg } = response;
           if (code !== 200) {

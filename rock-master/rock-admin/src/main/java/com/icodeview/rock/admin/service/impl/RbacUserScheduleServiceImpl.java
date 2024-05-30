@@ -73,7 +73,6 @@ public class RbacUserScheduleServiceImpl extends ServiceImpl<RbacUserScheduleMap
     public void generate(Integer belongto) {
         List<RbacUserPreferences> userList = preferencesService.list();
         LocalDateTime createTimeValue = LocalDateTime.now();
-        System.out.println(userList);
         ArrayList<Long> userIds = new ArrayList<>();
         // 获取员工偏好
         HashMap<Long, Integer> noMoreThanTime = new HashMap<>();

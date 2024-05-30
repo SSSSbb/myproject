@@ -86,11 +86,7 @@ public class MyGa {
 
     public void mutate() {
         for (Population pop : species) {
-//            HashMap<Population, Integer> score = new HashMap<>();
-//            checkWorkTime(pop, score);
-
             if (Math.random() < mutProb) {
-//                if()
                 Random random = new Random(System.currentTimeMillis());
                 int n = this.userList.size();
                 int userIdx = random.nextInt(n);
