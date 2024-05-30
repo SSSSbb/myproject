@@ -105,7 +105,9 @@ export default () => {
   };
   
   useEffect(() => {
-    fetchData(); 
+if(belongto){
+  fetchData(); 
+}
   }, [belongto]); 
   useEffect(() => {
     fetchUser();

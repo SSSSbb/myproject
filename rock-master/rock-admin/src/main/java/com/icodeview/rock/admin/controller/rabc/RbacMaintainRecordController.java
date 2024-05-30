@@ -51,12 +51,13 @@ public class RbacMaintainRecordController {
             @RequestParam(value = "maintainer", required = false) String maintainer,
             @RequestParam(value = "safer", required = false) String safer,
             @RequestParam(value = "work", required = false) String work,
+            @RequestParam(value = "action", required = false) String action,
             @RequestParam(value = "partsRecord", required = false) Integer partsRecord,
             @RequestParam(value = "belongto", required = false) Integer belongto,
             @RequestParam(value = "current", required = false, defaultValue = "1") Long pageNum,
             @RequestParam(value = "pageSize", required = false, defaultValue = "20") Long pageSize
     ) {
-        PageResult<RbacMaintainRecordVo> result = rbacMaintainRecordService.getIndex(returned,eid,work,id, maintainer,belongto,partsRecord,safer,pageNum,  pageSize);
+        PageResult<RbacMaintainRecordVo> result = rbacMaintainRecordService.getIndex(action,returned,eid,work,id, maintainer,belongto,partsRecord,safer,pageNum,  pageSize);
         return CommonResult.success(result);
     }
 

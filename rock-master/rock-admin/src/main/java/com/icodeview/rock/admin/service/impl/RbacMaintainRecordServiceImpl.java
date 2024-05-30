@@ -23,13 +23,14 @@ import java.util.stream.Collectors;
 @Service
 public class RbacMaintainRecordServiceImpl extends ServiceImpl<RbacMaintainRecordMapper, RbacMaintainRecord> implements RbacMaintainRecordService {
     @Override
-    public PageResult<RbacMaintainRecordVo> getIndex(Integer returned,Integer eid,String work,Integer id, String maintainer, Integer belongto, Integer partsRecord, String safer, Long pageNum, Long pageSize) {
+    public PageResult<RbacMaintainRecordVo> getIndex(String action,Integer returned,Integer eid,String work,Integer id, String maintainer, Integer belongto, Integer partsRecord, String safer, Long pageNum, Long pageSize) {
         Page<RbacMaintainRecord> rbacMaintainRecordPage = new Page<>(pageNum, pageSize);
         Page<RbacMaintainRecord> page = lambdaQuery()
                 .eq(id != null , RbacMaintainRecord::getId, id)
                 .eq(eid != null , RbacMaintainRecord::getEid, eid)
                 .eq(returned != null , RbacMaintainRecord::getReturned, returned)
                 .and(StrUtil.isNotBlank(maintainer), q -> q.like(RbacMaintainRecord::getMaintainer, "%" + maintainer + "%"))
+                .and(StrUtil.isNotBlank(action), q -> q.like(RbacMaintainRecord::getAction, "%" + action + "%"))
                 .and(StrUtil.isNotBlank(work), q -> q.like(RbacMaintainRecord::getAction, "%" + work + "%"))
                 .eq(belongto != null , RbacMaintainRecord::getBelongto, belongto)
                 .eq(partsRecord != null , RbacMaintainRecord::getPartsRecord, partsRecord)

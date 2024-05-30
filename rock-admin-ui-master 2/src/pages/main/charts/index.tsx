@@ -88,7 +88,7 @@ const MyMap = () => {
       setMarkers(data);
     };
     fetchData();
-  }, []); 
+  }, [belongto]); 
 
   let mapCenter = { lng: 116.404, lat: 39.915 }; // 默认中心点坐标
 

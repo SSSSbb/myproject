@@ -18,6 +18,9 @@
           <view class="todo-info">
             目标电梯：{{ namelist[item.which] }}
           </view>
+          <view class="todo-info">
+            工作发送时间：{{ item.created_at }}
+          </view>
         </view>
       </navigator>
     </block>

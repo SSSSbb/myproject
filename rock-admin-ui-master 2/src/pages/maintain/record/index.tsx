@@ -126,6 +126,14 @@ const RbacTypeList: React.FC = () => {
     { value: 'maintain', label: '保养' },
     { value: 'repair', label: '维修' },
   ];
+  
+  const returned = [
+    { value: 1, label: '合格' },
+    { value: 2, label: '已退回未处理' },
+    { value: 3, label: '已退回已处理' },
+    { value: 0, label: '未检查' },
+  ];
+  
   const options_parts = [
     { value: 'clean', label: '清洁' },
     { value: 'lubricate', label: '润滑' },
@@ -296,19 +304,24 @@ const RbacTypeList: React.FC = () => {
     {
       title: '状态',
       dataIndex: 'returned',
-      search:false,
+      valueEnum: returned.reduce((acc, { value, label }) => {
+        acc[value] = { text: label };
+        return acc;
+      }, {}),    
       render: (text) => {
         switch (text) {
+          case 0:
+            return '未检查';
           case 1:
             return '合格';
           case 2:
             return '已退回未处理';
-            case 3:
+          case 3:
             return '已退回已处理';
           default:
-            return '未检查';
+            return text;
         }
-      },
+      }, 
     },
     {
       title: '创建时间',
@@ -441,7 +454,7 @@ const RbacTypeList: React.FC = () => {
                       </Button>
                   ]}
                   request={async (params = {}) => {
-                    const response = await querypartsrecord({ ...params, record_id: recordId, belongto: belongto });
+                    const response = await querypartsrecord({record_id: recordId, belongto: belongto });
                     console.log({recordId});
                     return {
                       success: response.code === 200,
@@ -534,6 +547,7 @@ const RbacTypeList: React.FC = () => {
             </Access>,
           ]}
           request={async (params = {}) => {
+            console.log({params});
             const rsp = await queryCurrentUser();
           const belongto = rsp.data?.belongto;
           setBelongto(belongto);

@@ -38,10 +38,13 @@ export default () => {
   }, []); 
 
   useEffect(() => {
-    fetchData(); 
-  }, [belongto]); 
+    if (belongto) { // 添加判断条件
+      fetchData(); 
+    }
+  }, [belongto]);  
   const fetchData = async () => {
     try {     
+      console.log({belongto});
       const response = await queryMaintainRecord({belongto: belongto ,safer:'0'});
       console.log({response});
       const processedData = response.data?.list.map((item) => ({
