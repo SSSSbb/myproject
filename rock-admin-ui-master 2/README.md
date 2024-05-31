@@ -1,7 +1,12 @@
-### 岩石后台管理系统
+### 电梯维护系统
+yarn 1.22.21
 
 
-岩石后台管理系统是一个基于springboot 2.2.2.release，spring security，ant design pro的前后分类的脚手架开发平台。
 
-希望岩石后台管理系统能想岩石一样牢固，稳定。
+--yarn install
+
+--yarn dev
+
+
+
 
